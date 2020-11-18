@@ -15,6 +15,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>WSServlet</servlet-name>
-        <url-pattern>/services/*</url-pattern>
+        <url-pattern>/ws/*</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/tugas-besar-2-ws-factory.iml" filepath="$PROJECT_DIR$/tugas-besar-2-ws-factory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ws-factory.iml" filepath="$PROJECT_DIR$/ws-factory.iml" />
     </modules>
   </component>
 </project>

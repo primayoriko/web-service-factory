@@ -4,7 +4,6 @@
 
     <endpoint
             name='HelloWorld'
-            implementation='com/webservice/factory/HelloWorld'
-            url-pattern='/services/HelloWorld'
-    />
+            implementation='com.factory.webservice.HelloWorld'
+            url-pattern='/ws/HelloWorld'/>
 </endpoints>
