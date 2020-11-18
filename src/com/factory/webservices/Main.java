@@ -1,6 +1,5 @@
 package com.factory.webservices;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
@@ -10,18 +9,15 @@ import javax.xml.ws.Endpoint;
 @SOAPBinding(style = Style.RPC)
 public class Main {
 //  @WebMethod
-//  public String sayHelloWorldFrom(String from) {
-//    String result = "Hello, world, from " + from;
-//    System.out.println(result);
-//    return result;
-//  }
-//  @WebMethod
 //  public String bonjour(String name) {
 //    return String.format("Bonjour %s", name);
 //  }
   public static void main(String[] argv) {
-    Object implementor = new Main();
-    String address = "http://localhost:9000/HelloWorld";
-    Endpoint.publish(address, implementor);
+    final String address = "http://localhost:9000/ws/";
+    Endpoint.publish(address + "Balance", new BalanceServiceImpl());
+    Endpoint.publish(address + "Chocolate", new ChocolateServiceImpl());
+    Endpoint.publish(address + "Ingredient", new IngredientServiceImpl());
+    Endpoint.publish(address + "Recipe", new RecipeServiceImpl());
+    Endpoint.publish(address + "Stock", new StockServiceImpl());
   }
 }
