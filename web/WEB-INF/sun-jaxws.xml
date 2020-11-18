@@ -3,7 +3,7 @@
 <endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
 
     <endpoint
-            name='HelloWorld'
-            implementation='com.factory.webservice.HelloWorld'
-            url-pattern='/ws/HelloWorld'/>
+            name='Something1'
+            implementation='com.factory.webservices.Main'
+            url-pattern='/ws/something1'/>
 </endpoints>
