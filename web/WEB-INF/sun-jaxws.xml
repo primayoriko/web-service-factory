@@ -7,22 +7,22 @@
             url-pattern='/ws/Main'/>
     <endpoint
             name='Balance'
-            implementation='com.factory.webservices.BalanceServiceImpl'
+            implementation='com.factory.webservices.service.BalanceServiceImpl'
             url-pattern='/ws/Balance'/>
     <endpoint
             name='Chocolate'
-            implementation='com.factory.webservices.ChocolateServiceImpl'
+            implementation='com.factory.webservices.service.ChocolateServiceImpl'
             url-pattern='/ws/Chocolate'/>
     <endpoint
             name='Ingredient'
-            implementation='com.factory.webservices.IngredientServiceImpl'
+            implementation='com.factory.webservices.service.IngredientServiceImpl'
             url-pattern='/ws/Ingredient'/>
     <endpoint
             name='Recipe'
-            implementation='com.factory.webservices.RecipeServiceImpl'
+            implementation='com.factory.webservices.service.RecipeServiceImpl'
             url-pattern='/ws/Recipe'/>
     <endpoint
             name='Stock'
-            implementation='com.factory.webservices.StockServiceImpl'
+            implementation='com.factory.webservices.service.StockServiceImpl'
             url-pattern='/ws/Stock'/>
 </endpoints>
