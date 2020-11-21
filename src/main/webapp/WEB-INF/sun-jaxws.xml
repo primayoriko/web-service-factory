@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
+    <endpoint
+            name='Main'
+            implementation='com.factory.Main'
+            url-pattern='/ws/Main'/>
+    <endpoint
+            name='Balance'
+            implementation='com.factory.service.BalanceServiceImpl'
+            url-pattern='/ws/Balance'/>
+    <endpoint
+            name='Chocolate'
+            implementation='com.factory.service.ChocolateServiceImpl'
+            url-pattern='/ws/Chocolate'/>
+    <endpoint
+            name='Ingredient'
+            implementation='com.factory.service.IngredientServiceImpl'
+            url-pattern='/ws/Ingredient'/>
+    <endpoint
+            name='Recipe'
+            implementation='com.factory.service.RecipeServiceImpl'
+            url-pattern='/ws/Recipe'/>
+    <endpoint
+            name='Stock'
+            implementation='com.factory.service.StockServiceImpl'
+            url-pattern='/ws/Stock'/>
+</endpoints>
