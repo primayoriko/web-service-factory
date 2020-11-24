@@ -25,7 +25,7 @@ public class InitServiceImpl extends Service implements InitService {
             List<String> output = new ArrayList<>();
             Statement statement = conn.createStatement();
 
-            sql = "DROP TABLE IF EXISTS saldo, requests, recipes, ingredients, chocolates";
+            sql = "DROP TABLE IF EXISTS balance, requests, recipes, ingredients, chocolates";
             rs = statement.executeUpdate(sql);
 
             sql = "CREATE TABLE chocolates ("
@@ -82,16 +82,16 @@ public class InitServiceImpl extends Service implements InitService {
             else
                 output.add("ERROR create table requests");
 
-            sql = "CREATE TABLE saldo ("
+            sql = "CREATE TABLE balance ("
                     + "id SERIAL PRIMARY KEY, "
-                    + "saldo BIGINT NOT NULL"
+                    + "amount BIGINT NOT NULL"
                 + ")";
             rs = statement.executeUpdate(sql);
 
             if(rs == 0)
-                output.add("saldo table successfully created");
+                output.add("balance table successfully created");
             else
-                output.add("ERROR create table saldo");
+                output.add("ERROR create table balance");
 
             String[] outputString = new String[output.size()];
             outputString = output.toArray(outputString);
@@ -269,25 +269,25 @@ public class InitServiceImpl extends Service implements InitService {
                 output.add("Error inserting request data");
             }
 
-            List<String[]> saldo_data = new ArrayList<String[]>() {
+            List<String[]> balance_data = new ArrayList<String[]>() {
                 {
                     add(new String[] { "1", "2500000" });
                 }
             };
 
-            sql = "INSERT INTO saldo(id, saldo) VALUES (?, ?)";
+            sql = "INSERT INTO balance(id, amount) VALUES (?, ?)";
             ps = conn.prepareStatement(sql);
-            for (String[] data : saldo_data) {
+            for (String[] data : balance_data) {
                 ps.setInt(1, Integer.parseInt(data[0]));
                 ps.setLong(2, Long.parseLong(data[1]));
                 ps.addBatch();
                 ps.clearParameters();
             }
             res = ps.executeBatch();
-            if (res.length == saldo_data.size()){
-                output.add("Saldo data inserted successfully!");
+            if (res.length == balance_data.size()){
+                output.add("Balance data inserted successfully!");
             } else {
-                output.add("Error inserting saldo data");
+                output.add("Error inserting balance data");
             }
 
             String[] outputString = new String[output.size()];
