@@ -23,6 +23,7 @@
       <root url="jar://$PROJECT_DIR$/lib/stax-ex.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/streambuffer.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/woodstox-core-asl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/postgresql-42.2.18.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

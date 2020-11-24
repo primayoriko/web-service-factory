@@ -15,7 +15,7 @@ public class Service {
 
     protected void initConnection() throws Exception{
         try{
-            Class.forName("org.postgresql.Driver");
+//            Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ws_factory",
                     "postgres", "root");
         } catch (Error err){
