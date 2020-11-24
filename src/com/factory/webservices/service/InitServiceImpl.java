@@ -99,7 +99,7 @@ public class InitServiceImpl extends Service implements InitService {
             return outputString;
         } catch (Exception e){
             e.printStackTrace();
-            return new String[]{""};
+            return new String[]{"INTERNAL ERROR", e.getMessage()};
         } finally {
             closeConnection();
         }
