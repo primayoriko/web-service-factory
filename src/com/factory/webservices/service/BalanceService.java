@@ -14,5 +14,5 @@ public interface BalanceService {
     public Integer getBalance();
 
     @WebMethod
-    public String doTransaction(Integer amount);
+    public String[] doTransaction(Integer amount);
 }

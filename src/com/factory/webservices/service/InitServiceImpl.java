@@ -70,6 +70,7 @@ public class InitServiceImpl extends Service implements InitService {
                 output.add("ERROR create table recipes");
 
             sql = "CREATE TABLE requests ("
+                    + "id SERIAL PRIMARY KEY, "
                     + "chocolate_id INT NOT NULL, "
                     + "amount INT NOT NULL, "
                     + "status VARCHAR(10), "
@@ -234,15 +235,15 @@ public class InitServiceImpl extends Service implements InitService {
             List<String[]> requests_data = new ArrayList<String[]>() {
                 {
                     add(new String[] { "1", "3", "Waiting" });
-                    add(new String[] { "2", "5", "Approved" });
+                    add(new String[] { "2", "5", "Delivered" });
                     add(new String[] { "3", "1", "Rejected" });
                     add(new String[] { "4", "2", "Waiting" });
-                    add(new String[] { "5", "6", "Approved" });
+                    add(new String[] { "5", "6", "Delivered" });
                     add(new String[] { "6", "2", "Rejected" });
                     add(new String[] { "7", "1", "Waiting" });
-                    add(new String[] { "8", "2", "Approved" });
+                    add(new String[] { "8", "2", "Delivered" });
                     add(new String[] { "9", "8", "Rejected" });
-                    add(new String[] { "10", "12", "Approved" });
+                    add(new String[] { "10", "12", "Delivered" });
                     add(new String[] { "11", "1", "Waiting" });
                     add(new String[] { "12", "25", "Rejected" });
                     add(new String[] { "3", "3", "Waiting" });

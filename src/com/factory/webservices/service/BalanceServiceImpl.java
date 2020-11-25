@@ -41,7 +41,7 @@ public class BalanceServiceImpl extends Service implements BalanceService {
     }
 
     @Override
-    public String doTransaction(Integer amount){
+    public String[] doTransaction(Integer amount){
         try{
             initConnection();
 
@@ -52,22 +52,22 @@ public class BalanceServiceImpl extends Service implements BalanceService {
             
             if(rs.isBeforeFirst()){ // Check not empty
                 rs.next();
-                int cur_balance = rs.getInt("amount");
-                System.out.println(cur_balance);
-                System.out.println(amount);
-                int new_balance = cur_balance - amount;
-                if (new_balance < 0) {
-                    return "Balance not enough!";
+                Balance balance = new Balance(rs.getInt("amount"));
+                if (balance.isValidTransaction(amount)) {
+                    balance.doTransaction(amount);
+                } else {
+                    return new String[]{ "ERROR", "Amount is invalid!" };
                 }
+
                 Statement statement = conn.createStatement();
-                statement.executeUpdate("UPDATE balance SET amount=" + Integer.toString(new_balance) + " WHERE id=1");
-                return Integer.toString(new_balance);
+                statement.executeUpdate("UPDATE balance SET amount=" + balance.getAmount().toString() + " WHERE id=1");
+                return new String[] { "SUCCESS", balance.getAmount().toString() };
             }
 
-            return "Record empty";
+            return new String[]{ "ERROR", "Record is empty" };
         } catch (Exception e){
             e.printStackTrace();
-            return "";
+            return new String[]{ "ERROR", e.toString() };
         } finally {
             closeConnection();
         }
