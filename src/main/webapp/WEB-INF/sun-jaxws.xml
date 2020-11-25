@@ -6,6 +6,10 @@
             implementation='com.factory.Main'
             url-pattern='/ws/Main'/>
     <endpoint
+            name='Init'
+            implementation='com.factory.service.InitServiceImpl'
+            url-pattern='/ws/Init'/>
+    <endpoint
             name='Balance'
             implementation='com.factory.service.BalanceServiceImpl'
             url-pattern='/ws/Balance'/>

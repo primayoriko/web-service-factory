@@ -1,4 +1,4 @@
-package com.factory.webservices.service;
+package com.factory.service;
 
 import java.sql.Statement;
 import java.sql.PreparedStatement;
@@ -10,10 +10,10 @@ import java.util.stream.IntStream;
 
 import javax.jws.WebService;
 
-import com.factory.webservices.service.InitService;
-import com.factory.webservices.service.Service;
+import com.factory.service.InitService;
+import com.factory.service.Service;
 
-@WebService(endpointInterface = "com.factory.webservices.service.InitService")
+@WebService(endpointInterface = "com.factory.service.InitService")
 public class InitServiceImpl extends Service implements InitService {
     @Override
     public String[] initDatabase(){
