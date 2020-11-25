@@ -3,14 +3,14 @@ package com.factory.service;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-import com.factory.webservices.service.StockService;
-import com.factory.webservices.model.Stock;
-import com.factory.webservices.service.Service;
+import com.factory.service.StockService;
+import com.factory.model.Stock;
+import com.factory.service.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@WebService(endpointInterface = "com.factory.webservices.service.StockService")
+@WebService(endpointInterface = "com.factory.service.StockService")
 public class StockServiceImpl extends Service implements StockService {
     @Override
     public String[] getStocks() {

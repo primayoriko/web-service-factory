@@ -10,11 +10,11 @@ import java.sql.Statement;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-import com.factory.webservices.service.BalanceService;
-import com.factory.webservices.model.Balance;
-import com.factory.webservices.service.Service;
+import com.factory.service.BalanceService;
+import com.factory.model.Balance;
+import com.factory.service.Service;
 
-@WebService(endpointInterface = "com.factory.webservices.service.BalanceService")
+@WebService(endpointInterface = "com.factory.service.BalanceService")
 public class BalanceServiceImpl extends Service implements BalanceService {
     @Override
     public Integer getBalance(){
