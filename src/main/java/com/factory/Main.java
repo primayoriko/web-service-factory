@@ -36,6 +36,7 @@ public class Main {
 
     final String address = "http://localhost:9000/ws/";
     Endpoint.publish(address + "Balance", new BalanceServiceImpl());
+    Endpoint.publish(address + "Init", new InitServiceImpl());
 //    Endpoint.publish(address + "Chocolate", new ChocolateServiceImpl());
 //    Endpoint.publish(address + "Ingredient", new IngredientServiceImpl());
 //    Endpoint.publish(address + "Recipe", new RecipeServiceImpl());
