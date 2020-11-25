@@ -12,7 +12,22 @@ public class Recipe {
 
     }
 
-    public boolean addIngredient(){
-        return true;
+    public Chocolate getChocolate(){
+        return this.chocolate;
     }
+
+    public void setChocolate(Chocolate chocolate){
+        this.chocolate = chocolate;
+    }
+
+    public void addIngredient(Ingredient ingredient, Integer count){
+        this.ingredients.add(
+                    new Pair<Ingredient, Integer>(ingredient, count)
+                );
+    }
+
+    public ArrayList<Pair<Ingredient, Integer>> getIngredient(){
+        return this.ingredients;
+    }
+
 }
