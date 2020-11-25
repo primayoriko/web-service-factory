@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 target/
 out/
 lib/
 old/
-=======
-/target/
-/bin/
-/out/
 # Compiled class file
 *.class
 
@@ -66,4 +61,3 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
->>>>>>> 87794448622f6f19620a940613fdce8349b2cb15
