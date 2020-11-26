@@ -8,8 +8,11 @@ import javax.jws.soap.SOAPBinding;
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface InitService {
     @WebMethod
-    public String[] initDatabase();
+    public String[] initSchema();
 
     @WebMethod
     public String[] initDummy();
+
+    @WebMethod
+    public String[][] resetDatabase();
 }

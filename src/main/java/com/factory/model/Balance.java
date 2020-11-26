@@ -5,30 +5,41 @@ import java.sql.ResultSet;
 import java.sql.Date;
 
 public class Balance {
+    private Integer id;
     private Integer amount;
 
-    public Balance(){
-        this.amount = 0;
+    public Balance(ResultSet rs){
+        try{
+            this.id = rs.getInt("id");
+            this.amount = rs.getInt("amount");
+        } catch (Exception err){
+            err.printStackTrace();
+            this.id = 1;
+            this.amount = 0;
+        }
     }
 
-    public Balance(Integer amount){
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
         this.amount = amount;
-    }
-
-    public Integer getAmount(){
-        return this.amount;
     }
 
     public boolean isValidTransaction(Integer amount){
-        return this.amount + amount >= 0;
+        return this.amount >= amount;
     }
 
-    public Integer doTransaction(Integer amount){
-        this.amount += amount;
-        return this.amount;
-    }
-
-    public void setAmount(Integer amount){
-        this.amount = amount;
+    public void doTransaction(Integer amount){
+        this.amount -= amount;
     }
 }

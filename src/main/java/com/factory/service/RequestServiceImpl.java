@@ -1,17 +1,9 @@
 package com.factory.service;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 
-import com.factory.service.StockService;
-import com.factory.model.Stock;
-import com.factory.service.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-
-@WebService(endpointInterface = "com.factory.service.StockService")
-public class StockServiceImpl extends Service implements StockService {
+@WebService(endpointInterface = "com.factory.service.RequestService")
+public class RequestServiceImpl extends Service implements RequestService {
     @Override
     public String[] getStocks() {
         return new String[] {"Masih dibuat yak punten"};

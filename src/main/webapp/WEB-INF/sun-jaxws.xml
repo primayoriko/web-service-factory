@@ -27,6 +27,6 @@
             url-pattern='/ws/Recipe'/>
     <endpoint
             name='Stock'
-            implementation='com.factory.service.StockServiceImpl'
+            implementation='com.factory.service.RequestServiceImpl'
             url-pattern='/ws/Stock'/>
 </endpoints>

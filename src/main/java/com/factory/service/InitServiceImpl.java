@@ -15,8 +15,16 @@ import com.factory.service.Service;
 
 @WebService(endpointInterface = "com.factory.service.InitService")
 public class InitServiceImpl extends Service implements InitService {
+    @Override 
+    public String[][] resetDatabase(){
+        return new String[][]{
+                initSchema(),
+                initDummy()
+            };
+    }
+
     @Override
-    public String[] initDatabase(){
+    public String[] initSchema(){
         try{
             initConnection();
 
@@ -110,10 +118,31 @@ public class InitServiceImpl extends Service implements InitService {
     public String[] initDummy(){
         try{
             initConnection();
-             
+            
             String sql;
             int[] res;
             List<String> output = new ArrayList<>();
+
+            // List<String[]> balance_data = new ArrayList<String[]>() {
+            //     {
+            //         add(new String[] { "1", "0"});
+            //     }
+            // };
+            // sql = "INSERT INTO chocolates(id, amount) VALUES (?, ?)";
+            // ps = conn.prepareStatement(sql);
+            // for (String[] data : balance_data) {
+            //     ps.setInt(1, Integer.parseInt(data[0]));
+            //     ps.setInt(2, Integer.parseInt(data[1]));
+            //     ps.addBatch();
+            //     ps.clearParameters();
+            // }
+            // res = ps.executeBatch();
+            // if (res.length == balance_data.size()){
+            //     output.add("Balance data inserted successfully!");
+            // } else {
+            //     output.add("Error inserting balance data");
+            // }
+
             List<String[]> chocolates_data = new ArrayList<String[]>() {
                 {
                     add(new String[] { "1", "Dairy Milk", "13", "ntap" });
