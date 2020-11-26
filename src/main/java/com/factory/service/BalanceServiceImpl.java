@@ -1,24 +1,21 @@
 package com.factory.service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.jws.WebMethod;
+import javax.annotation.Resource;
 import javax.jws.WebService;
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
 
 import com.factory.model.Balance;
-import com.factory.model.Response;
-import com.factory.service.BalanceService;
-import com.factory.service.Service;
 
 @WebService(endpointInterface = "com.factory.service.BalanceService")
 public class BalanceServiceImpl extends Service implements BalanceService {
+    @Resource
+    private WebServiceContext webServiceContext;
+
     @Override
-    public Response<Balance> getBalance(){
+    public Balance getBalance(){
         try{
             initConnection();
 
@@ -28,14 +25,18 @@ public class BalanceServiceImpl extends Service implements BalanceService {
 
             if(rs.isBeforeFirst()){ 
                 rs.next();
-                return new Response<Balance>(200, new Balance(rs));
+                return new Balance(rs);
             }
 
             System.out.println("Record empty");
-            return new Response<Balance>(404);
+            webServiceContext.getMessageContext()
+                    .put(MessageContext.HTTP_RESPONSE_CODE, 404);
+            return null;
         } catch (Exception e){
             e.printStackTrace();
-            return new Response<Balance>(500);
+            webServiceContext.getMessageContext()
+                    .put(MessageContext.HTTP_RESPONSE_CODE, 500);
+            return null;
         } finally {
             closeConnection();
         }

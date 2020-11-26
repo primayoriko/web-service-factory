@@ -1,9 +1,14 @@
 package com.factory.service;
 
+import javax.annotation.Resource;
 import javax.jws.WebService;
+import javax.xml.ws.WebServiceContext;
 
 @WebService(endpointInterface = "com.factory.service.RequestService")
 public class RequestServiceImpl extends Service implements RequestService {
+    @Resource
+    private WebServiceContext webServiceContext;
+    
     @Override
     public String[] getStocks() {
         return new String[] {"Masih dibuat yak punten"};
