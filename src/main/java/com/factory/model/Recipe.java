@@ -6,36 +6,33 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class Recipe {
-    private Chocolate chocolate;
-    private ArrayList<Pair<Ingredient, Integer>> ingredients;
+    private Integer chocolateId;
+    private Integer ingredientId;
 
     public Recipe(ResultSet rs){
         try{
-
+            this.chocolateId = rs.getInt("chocolateId");
+            this.ingredientId = rs.getInt("ingredientId");
         } catch (Exception err){
             err.printStackTrace();
+            this.chocolateId = null;
+            this.ingredientId = null;
         }
     }
 
-    public void addIngredient(Ingredient ingredient, Integer count){
-        this.ingredients.add(
-                    new Pair<Ingredient, Integer>(ingredient, count)
-                );
+    public Integer getChocolateId() {
+        return chocolateId;
     }
 
-    public Chocolate getChocolate(){
-        return this.chocolate;
+    public void setChocolateId(Integer chocolateId) {
+        this.chocolateId = chocolateId;
     }
 
-    public void setChocolate(Chocolate chocolate){
-        this.chocolate = chocolate;
+    public Integer getIngredientId() {
+        return ingredientId;
     }
 
-    public ArrayList<Pair<Ingredient, Integer>> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(ArrayList<Pair<Ingredient, Integer>> ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredientId(Integer ingredientId) {
+        this.ingredientId = ingredientId;
     }
 }

@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "a0c85790-e4e3-4b26-8fdd-87306ee8d8f9",
+		"name": "WS_Factory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Balance",
+			"item": [
+				{
+					"name": "getBalance",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <S:Body>\r\n        <ns:getBalance xmlns:ns=\"http://service.factory.com/\">\r\n        </ns:getBalance>\r\n    </S:Body>\r\n</S:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/ws/Balance?wsdl",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"ws",
+								"Balance"
+							],
+							"query": [
+								{
+									"key": "wsdl",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "doTransaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Recipe",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Init",
+			"item": [
+				{
+					"name": "InitDB",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<S:Envelope xmlns:S=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n    <S:Body>\r\n        <ns:resetDatabase xmlns:ns=\"http://service.factory.com/\">\r\n        </ns:resetDatabase>\r\n    </S:Body>\r\n</S:Envelope>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/ws/Init?wsdl",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"ws",
+								"Init"
+							],
+							"query": [
+								{
+									"key": "wsdl",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
