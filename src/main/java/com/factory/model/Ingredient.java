@@ -1,40 +1,53 @@
 package com.factory.model;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 
 public class Ingredient {
     private String name;
     private Integer count;
-    private Date expire;
+    private Date expireDate;
 
-    public Ingredient(){
-        this.name = "";
-        this.count = 0;
-        this.expire = new Date(0);
+    public Ingredient(ResultSet rs){
+        try{
+            this.name = rs.getString("name");
+            this.count = rs.getInt("count");
+            this.expireDate = rs.getDate("expire_date");
+        } catch (Exception err){
+            err.printStackTrace();
+            this.name = null;
+            this.count = null;
+            this.expireDate = null;
+        }
     }
 
-    public Ingredient(String name, Integer count, Date expire){
+    public Ingredient(String name, Integer count, Date expireDate){
         this.name = name;
         this.count = count;
-        this.expire = expire;
+        this.expireDate = expireDate;
     }
 
-    public Ingredient copy(Ingredient target){
-        this.count = target.count;
-        this.expire = target.expire;
-        this.name = target.name;
-        return this;
+    public String getName() {
+        return name;
     }
 
-    public String getName(){
-        return this.name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getCount(){
-        return this.count;
+    public Integer getCount() {
+        return count;
     }
 
-    public Date getExpire(){
-        return this.expire;
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
     }
 }

@@ -40,7 +40,7 @@ public class InitServiceImpl extends Service implements InitService {
                     + "id SERIAL PRIMARY KEY, "
                     + "name VARCHAR(50) NOT NULL, "
                     + "amount INT NOT NULL, "
-                    + "description TEXT"
+//                    + "description TEXT"
                 + ")";
             rs = statement.executeUpdate(sql);
 
@@ -50,10 +50,11 @@ public class InitServiceImpl extends Service implements InitService {
                 output.add("ERROR create table chocolates");
 
             sql = "CREATE TABLE ingredients ("
-                    + "id SERIAL PRIMARY KEY, "
+//                    + "id SERIAL PRIMARY KEY, "
                     + "name VARCHAR(50) NOT NULL, "
                     + "amount INT NOT NULL, "
                     + "expire_date DATE NOT NULL"
+                    + "PRIMARY KEY (name, expire_date), "
                 + ")";
             rs = statement.executeUpdate(sql);
 
@@ -145,18 +146,18 @@ public class InitServiceImpl extends Service implements InitService {
 
             List<String[]> chocolates_data = new ArrayList<String[]>() {
                 {
-                    add(new String[] { "1", "Dairy Milk", "13", "ntap" });
-                    add(new String[] { "2", "Silver Queen", "12", "enak bingits" });
-                    add(new String[] { "3", "Kinder Joy", "7", "enak pisan euy" });
-                    add(new String[] { "4", "Kitkat Green", "1", "booming banget dulu sampe PO ke jepun" });
-                    add(new String[] { "5", "Kitkat White", "7", "putih bersih merona" });
-                    add(new String[] { "6", "Kitkat Dark", "9", "hitam pekat kayak tubes" });
-                    add(new String[] { "7", "Kitkat Hello Kitty", "5", "uwu banget uwuwuwu" });
-                    add(new String[] { "8", "Toblerone", "6", "coklat khas dragonspine" });
-                    add(new String[] { "9", "Dove", "20", "di borma murah wgwg" });
-                    add(new String[] { "10", "Alpine", "2", "ini agak mahal dari dove tapi enak sih" });
-                    add(new String[] { "11", "Aice", "30", "BEST BANGET ENAK PARAH MURAH" });
-                    add(new String[] { "12", "Chocolatos", "45", "coklat bocil" });
+                    add(new String[] { "1", "Dairy Milk", "13" });
+                    add(new String[] { "2", "Silver Queen", "12" });
+                    add(new String[] { "3", "Kinder Joy", "7" });
+                    add(new String[] { "4", "Kitkat Green", "1" });
+                    add(new String[] { "5", "Kitkat White", "7" });
+                    add(new String[] { "6", "Kitkat Dark", "9" });
+                    add(new String[] { "7", "Kitkat Hello Kitty", "5" });
+                    add(new String[] { "8", "Toblerone", "6" });
+                    add(new String[] { "9", "Dove", "20", });
+                    add(new String[] { "10", "Alpine", "2" });
+                    add(new String[] { "11", "Aice", "30"});
+                    add(new String[] { "12", "Chocolatos", "45"});
                 }
             };
 
@@ -179,12 +180,12 @@ public class InitServiceImpl extends Service implements InitService {
 
             List<String[]> ingredients_data = new ArrayList<String[]>() {
                 {
-                    add(new String[] { "1", "coklat", "25", "2020-12-09" });
-                    add(new String[] { "2", "susu", "32", "2020-12-15" });
-                    add(new String[] { "3", "matcha", "12", "2021-2-14" });
-                    add(new String[] { "4", "gula", "60", "2021-4-22" });
-                    add(new String[] { "5", "kacang", "18", "2021-5-10" });
-                    add(new String[] { "6", "berry", "9", "2020-12-25" });
+                    add(new String[] { "coklat", "25", "2020-12-09" });
+                    add(new String[] { "susu", "32", "2020-12-15" });
+                    add(new String[] { "matcha", "12", "2021-2-14" });
+                    add(new String[] { "gula", "60", "2021-4-22" });
+                    add(new String[] { "kacang", "18", "2021-5-10" });
+                    add(new String[] { "berry", "9", "2020-12-25" });
                 }
             };
 
