@@ -1,11 +1,16 @@
 package com.factory.model;
 
-import javax.print.attribute.IntegerSyntax;
-import java.sql.ResultSet;
-import java.sql.Date;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAccessType;
 
+import java.sql.ResultSet;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Balance {
+    @XmlElement( required = true )
     private Integer id;
+    @XmlElement( required = true )
     private Integer amount;
 
     public Balance(ResultSet rs){
