@@ -10,8 +10,11 @@ import java.util.stream.IntStream;
 
 import javax.jws.WebService;
 
+import com.factory.model.User;
 import com.factory.service.InitService;
 import com.factory.service.Service;
+
+import org.postgresql.util.MD5Digest;
 
 @WebService(endpointInterface = "com.factory.service.InitService")
 public class InitServiceImpl extends Service implements InitService {
@@ -33,7 +36,7 @@ public class InitServiceImpl extends Service implements InitService {
             List<String> output = new ArrayList<>();
             Statement statement = conn.createStatement();
 
-            sql = "DROP TABLE IF EXISTS balance, requests, recipes, ingredients, chocolates";
+            sql = "DROP TABLE IF EXISTS balance, users, requests, recipes, ingredients, chocolates";
             rs = statement.executeUpdate(sql);
 
             sql = "CREATE TABLE chocolates ("
@@ -103,6 +106,19 @@ public class InitServiceImpl extends Service implements InitService {
                 output.add("balance table successfully created");
             else
                 output.add("ERROR create table balance");
+
+            sql = "CREATE TABLE users ("
+                    + "username VARCHAR(30) NOT NULL PRIMARY KEY, "
+                    + "email VARCHAR(50) NOT NULL UNIQUE, "
+                    + "name VARCHAR(80) NOT NULL, "
+                    + "password VARCHAR(32) NOT NULL"
+                + ")";
+            rs = statement.executeUpdate(sql);
+
+            if(rs == 0)
+                output.add("users table successfully created");
+            else
+                output.add("ERROR create table users");
 
             String[] outputString = new String[output.size()];
             outputString = output.toArray(outputString);
@@ -366,6 +382,32 @@ public class InitServiceImpl extends Service implements InitService {
                 output.add("Balance data inserted successfully!");
             } else {
                 output.add("Error inserting balance data");
+            }
+
+            List<String[]> users_data = new ArrayList<String[]>() {
+                {
+                    add(new String[] { "mitsuha", "mitsuha@gmail.com", "Mitsuha", "test123" });
+                    add(new String[] { "takikun", "taki.20@gmail.com", "Taki-kun", "password" });
+                    add(new String[] { "wwchoco", "wwbgst@gmail.com", "Willy Wonka", "abc" });
+                }
+            };
+
+            sql = "INSERT INTO users(username, email, name, password) VALUES (?, ?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            for (String[] data : users_data) {
+                String hashed_password = User.hashPassword(data[0], data[3]);
+                ps.setString(1, data[0]);
+                ps.setString(2, data[1]);
+                ps.setString(3, data[2]);
+                ps.setString(4, hashed_password);
+                ps.addBatch();
+                ps.clearParameters();
+            }
+            res = ps.executeBatch();
+            if (res.length == users_data.size()){
+                output.add("Users data inserted successfully!");
+            } else {
+                output.add("Error inserting users data");
             }
 
             String[] outputString = new String[output.size()];

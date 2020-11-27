@@ -38,6 +38,7 @@ public class Main {
     Endpoint.publish(address + "Init", new InitServiceImpl());
     Endpoint.publish(address + "Request", new RequestServiceImpl());
     Endpoint.publish(address + "Chocolate", new ChocolateServiceImpl());
+    Endpoint.publish(address + "Auth", new AuthServiceImpl());
 //    Endpoint.publish(address + "Ingredient", new IngredientServiceImpl());
 //    Endpoint.publish(address + "Recipe", new RecipeServiceImpl());
     Endpoint.publish(address + "Main", new Main());
