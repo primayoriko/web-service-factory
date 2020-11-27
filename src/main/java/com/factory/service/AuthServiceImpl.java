@@ -19,9 +19,6 @@ import com.factory.service.Service;
 
 @WebService(endpointInterface = "com.factory.service.AuthService")
 public class AuthServiceImpl extends Service implements AuthService {
-    @Resource
-    private WebServiceContext webServiceContext;
-
     @Override
     public Boolean register(String username, String email,
                             String name, String password){

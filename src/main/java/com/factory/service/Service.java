@@ -1,5 +1,7 @@
 package com.factory.service;
 
+import javax.annotation.Resource;
+import javax.xml.ws.WebServiceContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +21,9 @@ import com.factory.model.GenerateSoapFault;
 import java.sql.*;
 
 public class Service {
+    @Resource
+    protected WebServiceContext webServiceContext;
+
     protected Connection conn = null;
     protected PreparedStatement ps = null;
     protected ResultSet rs = null;
@@ -52,16 +57,16 @@ public class Service {
         }
     }
     
-    protected void AllowCORS(WebServiceContext ctx) {
-        ctx.getMessageContext().put(MessageContext.HTTP_RESPONSE_HEADERS, new HashMap<String, List<String>>() {{
+    protected void AllowCORS() {
+        webServiceContext.getMessageContext().put(MessageContext.HTTP_RESPONSE_HEADERS, new HashMap<String, List<String>>() {{
             put("Access-Control-Allow-Origin", new ArrayList<String>() {{
                 add("*");
             }});
         }});
     }
     
-    protected SOAPFaultException generateSoapFaultException(WebServiceContext ctx, Integer response_code, String message, String fault_code) {
-        ctx.getMessageContext()
+    protected SOAPFaultException generateSoapFaultException(Integer response_code, String message, String fault_code) {
+        webServiceContext.getMessageContext()
                 .put(MessageContext.HTTP_RESPONSE_CODE, response_code);
         return new SOAPFaultException(
             new GenerateSoapFault(message, fault_code).getSoapFault()

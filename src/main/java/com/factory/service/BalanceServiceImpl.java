@@ -15,12 +15,9 @@ import com.factory.model.Balance;
 
 @WebService(endpointInterface = "com.factory.service.BalanceService")
 public class BalanceServiceImpl extends Service implements BalanceService {
-    @Resource
-    private WebServiceContext webServiceContext;
-
     @Override
     public Balance getBalance(){
-        AllowCORS(webServiceContext);
+        AllowCORS();
         try{
             initConnection();
 
@@ -34,13 +31,13 @@ public class BalanceServiceImpl extends Service implements BalanceService {
             }
 
             System.out.println("Record empty");
-            throw generateSoapFaultException(ctx, 404, 
+            throw generateSoapFaultException(404, 
                     "Internal Server Error. Please try again later.", "Server");
         } catch (SOAPFaultException e){
             throw e;
         } catch (Exception e){
             e.printStackTrace();
-            throw generateSoapFaultException(ctx, 500, 
+            throw generateSoapFaultException(500, 
                     "Internal Server Error. Please try again later.", "Server");
         } finally {
             closeConnection();
@@ -49,9 +46,9 @@ public class BalanceServiceImpl extends Service implements BalanceService {
 
     @Override
     public Balance doTransaction(Integer amount) {
-        AllowCORS(webServiceContext);
+        AllowCORS();
         if (amount == null) {
-            throw generateSoapFaultException(ctx, 400, 
+            throw generateSoapFaultException(400, 
                     "Client Request Error: parameter 'amount' is not specified", "Client");
         }
         
@@ -68,7 +65,7 @@ public class BalanceServiceImpl extends Service implements BalanceService {
                 if (balance.isValidTransaction(amount)) {
                     balance.doTransaction(amount);
                 } else {
-                    throw generateSoapFaultException(ctx, 404, 
+                    throw generateSoapFaultException(404, 
                             "Client Request Error: Amount is invalid!", "Client");
                 }
 
@@ -77,13 +74,13 @@ public class BalanceServiceImpl extends Service implements BalanceService {
                 return balance;
             }
             
-            throw generateSoapFaultException(ctx, 404, 
+            throw generateSoapFaultException(404, 
                     "Internal Server Error. Please try again later.", "Server");
         } catch (SOAPFaultException e) {
             throw e;
         } catch (Exception e){
             e.printStackTrace();
-            throw generateSoapFaultException(ctx, 500, 
+            throw generateSoapFaultException(500, 
                     "Internal Server Error. Please try again later.", "Server");
         } finally {
             closeConnection();
