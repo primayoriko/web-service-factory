@@ -3,18 +3,94 @@ package com.factory.service;
 import com.factory.model.Balance;
 import com.factory.model.Chocolate;
 import com.factory.model.Request;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
-import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.soap.SOAPFaultException;
+import javax.jws.WebMethod;
+
+import com.factory.model.Stock;
+import com.factory.model.Balance;
+import com.factory.model.Request;
+import com.factory.model.Status;
+
 import javax.xml.ws.handler.MessageContext;
-import java.util.ArrayList;
 
 @WebService(endpointInterface = "com.factory.service.RequestService")
 public class RequestServiceImpl extends Service implements RequestService {
     @Override
-    public Request[] getRequests(){
+    public Stock[] getStocks() {
+        AllowCORS();
+        try{
+            initConnection();
+            List<Stock> output = new ArrayList<>();
+
+            ps = conn.prepareStatement("SELECT * FROM requests");
+
+            rs = ps.executeQuery();
+
+            if (rs.isBeforeFirst()) { // Check not empty
+                while (rs.next()) {
+                    Stock stock = new Stock(rs);
+                    output.add(stock);
+                }
+                Stock[] outputStock = new Stock[output.size()];
+                outputStock = output.toArray(outputStock);
+                return outputStock;
+            }
+
+            System.out.println("Record empty");
+            throw generateSoapFaultException(404, 
+                    "Internal Server Error. Please try again later.", "Server");
+        } catch (SOAPFaultException e){
+            throw e;
+        } catch (Exception e){
+            e.printStackTrace();
+            throw generateSoapFaultException(500, 
+                    "Internal Server Error. Please try again later.", "Server");
+        } finally {
+            closeConnection();
+        }
+    }
+    
+    @Override
+    public Stock getStock(Integer id) {
+        AllowCORS();
+        if (id == null) {
+            throw generateSoapFaultException(400, "Client Request Error: parameter 'id' is not specified",
+                    "Client");
+        }
+
+        try {
+            initConnection();
+
+            ps = conn.prepareStatement("SELECT * FROM stock where id=" + id.toString());
+
+            rs = ps.executeQuery();
+
+            if (rs.isBeforeFirst()) { // Check not empty
+                rs.next();
+                return new Stock(rs);
+            }
+
+            System.out.println("Record empty");
+            throw generateSoapFaultException(404, "Internal Server Error. Please try again later.", "Server");
+        } catch (SOAPFaultException e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw generateSoapFaultException(500, "Internal Server Error. Please try again later.", "Server");
+        } finally {
+            closeConnection();
+        }
+    }
+    
+    public Request[] getRequests() {
+        AllowCORS();
         try{
             initConnection();
 //            ps = conn.prepareStatement("SELECT * FROM requests ORDER BY status");
@@ -36,9 +112,8 @@ public class RequestServiceImpl extends Service implements RequestService {
             return response;
         } catch (Exception err){
             err.printStackTrace();
-            webServiceContext.getMessageContext()
-                    .put(MessageContext.HTTP_RESPONSE_CODE, 500);
-            return null;
+            throw generateSoapFaultException(500, 
+                    "Internal Server Error. Please try again later.", "Server");
         } finally {
             closeConnection();
         }
@@ -46,8 +121,13 @@ public class RequestServiceImpl extends Service implements RequestService {
 
     @Override
     public String changeRequestStatus(Integer id, String status){
+        AllowCORS();
+        if (id == null || status == null) {
+            throw generateSoapFaultException(400, "Client Request Error: parameter 'id' is not specified",
+                    "Client");
+        }
         try{
-            Request.Status newStatus = Request.translateToStatus(status);
+            Status newStatus = Request.translateToStatus(status);
             initConnection();
 
             ps = conn.prepareStatement("UPDATE requests SET status = ? WHERE id = ?");
@@ -100,9 +180,8 @@ public class RequestServiceImpl extends Service implements RequestService {
             return String.format("Created");
         } catch (Exception err){
             err.printStackTrace();
-            webServiceContext.getMessageContext()
-                    .put(MessageContext.HTTP_RESPONSE_CODE, 500);
-            return null;
+            throw generateSoapFaultException(500, 
+                    "Internal Server Error. Please try again later.", "Server");
         } finally {
             closeConnection();
         }

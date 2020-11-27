@@ -1,47 +1,45 @@
 package com.factory.model;
 
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlAccessType;
-
 import java.sql.ResultSet;
+
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlElement;
+
 import java.sql.Date;
 
 import com.factory.model.Status;
+
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Request {
+public class Stock {
     @XmlElement( required = true )
     private Integer id;
-<<<<<<< HEAD
-    private Integer chocolateName;
-=======
     @XmlElement( required = true )
-    private Integer chocolateId;
+    private Integer chocolate_id;
     @XmlElement( required = true )
->>>>>>> 9217c7f53bbb63d7f0d6e02ee10d2fcdbd3d9d6d
     private Integer amount;
     @XmlElement( required = true )
     private Status status;
     @XmlElement( required = true )
     private Date date_requested;
 
-    public Request(ResultSet rs){
-        try{
+    public Stock(ResultSet rs) {
+        try {
             this.id = rs.getInt("id");
-            this.chocolateName = rs.getInt("name");
+            this.chocolate_id = rs.getInt("chocolate_id");
             this.amount = rs.getInt("amount");
-            this.status = Request.translateToStatus(rs.getString("status"));
+            this.status = Stock.translateToStatus(rs.getString("status"));
             this.date_requested = rs.getDate("date_requested");
-        } catch (Exception err){
+        } catch (Exception err) {
             err.printStackTrace();
             this.id = null;
-            this.chocolateName = null;
+            this.chocolate_id = null;
             this.amount = null;
             this.status = null;
             this.date_requested = null;
         }
     }
-
+    
     public static Status translateToStatus(String status) throws Exception {
         if(status.equals("Rejected")){
             return Status.REJECTED;
@@ -54,15 +52,6 @@ public class Request {
         throw new Exception("Request Status not valid!");
     }
 
-    public static String translateFromStatus(Status status){
-        if(status.equals(Status.REJECTED)){
-            return "Rejected";
-        } else if (status.equals(Status.DELIVERED)){
-            return "Delivered";
-        }
-        return "Waiting";
-    }
-
     public Integer getId() {
         return id;
     }
@@ -71,12 +60,12 @@ public class Request {
         this.id = id;
     }
 
-    public Integer getChocolateName() {
-        return chocolateName;
+    public Integer getChocolateId() {
+        return chocolate_id;
     }
 
-    public void setChocolateName(Integer chocolateName) {
-        this.chocolateName = chocolateName;
+    public void setChocolateId(Integer chocolate_id) {
+        this.chocolate_id = chocolate_id;
     }
 
     public Integer getAmount() {

@@ -39,7 +39,7 @@ public class InitServiceImpl extends Service implements InitService {
             sql = "CREATE TABLE chocolates ("
                     + "id SERIAL PRIMARY KEY, "
                     + "name VARCHAR(50) NOT NULL, "
-                    + "amount INT NOT NULL, "
+                    + "amount INT NOT NULL "
 //                    + "description TEXT"
                 + ")";
             rs = statement.executeUpdate(sql);
@@ -50,11 +50,11 @@ public class InitServiceImpl extends Service implements InitService {
                 output.add("ERROR create table chocolates");
 
             sql = "CREATE TABLE ingredients ("
-//                    + "id SERIAL PRIMARY KEY, "
-                    + "name VARCHAR(50) NOT NULL, "
+                    + "id SERIAL PRIMARY KEY, "
+                    // + "name VARCHAR(50) NOT NULL, "
                     + "amount INT NOT NULL, "
-                    + "expire_date DATE NOT NULL"
-                    + "PRIMARY KEY (name, expire_date), "
+                    + "expire_date DATE NOT NULL "
+                    // + "PRIMARY KEY (id, name) "
                 + ")";
             rs = statement.executeUpdate(sql);
 
@@ -65,11 +65,11 @@ public class InitServiceImpl extends Service implements InitService {
 
             sql = "CREATE TABLE recipes ("
                     + "chocolate_id INT NOT NULL, "
-                    + "ingredient_id INT NOT NULL, "
+                    + "ingredient_name INT NOT NULL, "
                     + "amount INT NOT NULL, "
-                    + "PRIMARY KEY (chocolate_id, ingredient_id), "
+                    + "PRIMARY KEY (chocolate_id, ingredient_name), "
                     + "FOREIGN KEY (chocolate_id) REFERENCES chocolates(id), "
-                    + "FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)"
+                    + "FOREIGN KEY (ingredient_name) REFERENCES ingredients(name)"
                 + ")";
             rs = statement.executeUpdate(sql);
 
@@ -83,6 +83,7 @@ public class InitServiceImpl extends Service implements InitService {
                     + "chocolate_id INT NOT NULL, "
                     + "amount INT NOT NULL, "
                     + "status VARCHAR(10), "
+                    + "date_requested DATE NOT NULL, "
                     + "FOREIGN KEY (chocolate_id) REFERENCES chocolates(id)"
                 + ")";
             rs = statement.executeUpdate(sql);
@@ -161,13 +162,12 @@ public class InitServiceImpl extends Service implements InitService {
                 }
             };
 
-            sql = "INSERT INTO chocolates(id, name, amount, description) VALUES (?, ?, ?, ?)";
+            sql = "INSERT INTO chocolates(id, name, amount) VALUES (?, ?, ?)";
             ps = conn.prepareStatement(sql);
             for (String[] data : chocolates_data) {
                 ps.setInt(1, Integer.parseInt(data[0]));
                 ps.setString(2, data[1]);
                 ps.setInt(3, Integer.parseInt(data[2]));
-                ps.setString(4, data[3]);
                 ps.addBatch();
                 ps.clearParameters();
             }
@@ -189,13 +189,12 @@ public class InitServiceImpl extends Service implements InitService {
                 }
             };
 
-            sql = "INSERT INTO ingredients(id, name, amount, expire_date) VALUES (?, ?, ?, ?)";
+            sql = "INSERT INTO ingredients(name, amount, expire_date) VALUES (?, ?, ?)";
             ps = conn.prepareStatement(sql);
             for (String[] data : ingredients_data) {
-                ps.setInt(1, Integer.parseInt(data[0]));
-                ps.setString(2, data[1]);
-                ps.setInt(3, Integer.parseInt(data[2]));
-                ps.setDate(4, Date.valueOf(data[3]));
+                ps.setString(1, data[0]);
+                ps.setInt(2, Integer.parseInt(data[1]));
+                ps.setDate(3, Date.valueOf(data[2]));
                 ps.addBatch();
                 ps.clearParameters();
             }
@@ -206,51 +205,98 @@ public class InitServiceImpl extends Service implements InitService {
                 output.add("Error inserting ingredients data");
             }
 
+            // List<String[]> recipes_data = new ArrayList<String[]>() {
+            //     {
+            //         add(new String[] { "1", "1", "2"});
+            //         add(new String[] { "1", "4", "2"});
+            //         add(new String[] { "1", "2", "2"});
+            //         add(new String[] { "1", "6", "2"});
+            //         add(new String[] { "2", "1", "2"});
+            //         add(new String[] { "2", "4", "2"});
+            //         add(new String[] { "2", "2", "1"});
+            //         add(new String[] { "2", "5", "3"});
+            //         add(new String[] { "3", "1", "1"});
+            //         add(new String[] { "3", "4", "4"});
+            //         add(new String[] { "3", "2", "5"});
+            //         add(new String[] { "4", "1", "3"});
+            //         add(new String[] { "4", "4", "2"});
+            //         add(new String[] { "4", "2", "2"});
+            //         add(new String[] { "4", "3", "3"});
+            //         add(new String[] { "5", "1", "2"});
+            //         add(new String[] { "5", "4", "3"});
+            //         add(new String[] { "5", "2", "3"});
+            //         add(new String[] { "6", "1", "5"});
+            //         add(new String[] { "6", "4", "1"});
+            //         add(new String[] { "7", "1", "3"});
+            //         add(new String[] { "7", "4", "3"});
+            //         add(new String[] { "7", "2", "4"});
+            //         add(new String[] { "8", "1", "4"});
+            //         add(new String[] { "8", "4", "1"});
+            //         add(new String[] { "8", "2", "1"});
+            //         add(new String[] { "9", "1", "1"});
+            //         add(new String[] { "9", "4", "1"});
+            //         add(new String[] { "9", "2", "2"});
+            //         add(new String[] { "10", "1", "1"});
+            //         add(new String[] { "10", "4", "3"});
+            //         add(new String[] { "10", "2", "2"});
+            //         add(new String[] { "11", "1", "2"});
+            //         add(new String[] { "11", "4", "3"});
+            //         add(new String[] { "11", "2", "3"});
+            //         add(new String[] { "11", "5", "2"});
+            //         add(new String[] { "12", "1", "1"});
+            //         add(new String[] { "12", "4", "5"});
+            //         add(new String[] { "12", "2", "2"});
+            //     }
+            // };
             List<String[]> recipes_data = new ArrayList<String[]>() {
                 {
-                    add(new String[] { "1", "1", "2"});
-                    add(new String[] { "1", "4", "2"});
-                    add(new String[] { "1", "2", "2"});
-                    add(new String[] { "2", "1", "2"});
-                    add(new String[] { "2", "4", "2"});
-                    add(new String[] { "2", "2", "1"});
-                    add(new String[] { "3", "1", "1"});
-                    add(new String[] { "3", "4", "4"});
-                    add(new String[] { "3", "2", "5"});
-                    add(new String[] { "4", "1", "3"});
-                    add(new String[] { "4", "4", "2"});
-                    add(new String[] { "4", "2", "2"});
-                    add(new String[] { "5", "1", "2"});
-                    add(new String[] { "5", "4", "3"});
-                    add(new String[] { "5", "2", "3"});
-                    add(new String[] { "6", "1", "5"});
-                    add(new String[] { "6", "4", "1"});
-                    add(new String[] { "7", "1", "3"});
-                    add(new String[] { "7", "4", "3"});
-                    add(new String[] { "7", "2", "4"});
-                    add(new String[] { "8", "1", "4"});
-                    add(new String[] { "8", "4", "1"});
-                    add(new String[] { "8", "2", "1"});
-                    add(new String[] { "9", "1", "1"});
-                    add(new String[] { "9", "4", "1"});
-                    add(new String[] { "9", "2", "2"});
-                    add(new String[] { "10", "1", "1"});
-                    add(new String[] { "10", "4", "3"});
-                    add(new String[] { "10", "2", "2"});
-                    add(new String[] { "11", "1", "2"});
-                    add(new String[] { "11", "4", "3"});
-                    add(new String[] { "11", "2", "3"});
-                    add(new String[] { "12", "1", "1"});
-                    add(new String[] { "12", "4", "5"});
-                    add(new String[] { "12", "2", "2"});
+                    add(new String[] { "1", "coklat", "2"});
+                    add(new String[] { "1", "gula", "2"});
+                    add(new String[] { "1", "susu", "2"});
+                    add(new String[] { "1", "berry", "2"});
+                    add(new String[] { "2", "coklat", "2"});
+                    add(new String[] { "2", "gula", "2"});
+                    add(new String[] { "2", "susu", "1"});
+                    add(new String[] { "2", "kacang", "3"});
+                    add(new String[] { "3", "coklat", "1"});
+                    add(new String[] { "3", "gula", "4"});
+                    add(new String[] { "3", "susu", "5"});
+                    add(new String[] { "3", "matcha", "3"});
+                    add(new String[] { "4", "coklat", "3"});
+                    add(new String[] { "4", "gula", "2"});
+                    add(new String[] { "4", "susu", "2"});
+                    add(new String[] { "5", "coklat", "2"});
+                    add(new String[] { "5", "gula", "3"});
+                    add(new String[] { "5", "susu", "3"});
+                    add(new String[] { "6", "coklat", "5"});
+                    add(new String[] { "6", "gula", "1"});
+                    add(new String[] { "7", "coklat", "3"});
+                    add(new String[] { "7", "gula", "3"});
+                    add(new String[] { "7", "susu", "4"});
+                    add(new String[] { "8", "coklat", "4"});
+                    add(new String[] { "8", "gula", "1"});
+                    add(new String[] { "8", "susu", "1"});
+                    add(new String[] { "9", "coklat", "1"});
+                    add(new String[] { "9", "gula", "1"});
+                    add(new String[] { "9", "susu", "2"});
+                    add(new String[] { "10", "coklat", "1"});
+                    add(new String[] { "10", "gula", "3"});
+                    add(new String[] { "10", "susu", "2"});
+                    add(new String[] { "11", "coklat", "2"});
+                    add(new String[] { "11", "gula", "3"});
+                    add(new String[] { "11", "susu", "3"});
+                    add(new String[] { "11", "kacang", "2"});
+                    add(new String[] { "12", "coklat", "1"});
+                    add(new String[] { "12", "gula", "5"});
+                    add(new String[] { "12", "susu", "2"});
                 }
             };
 
-            sql = "INSERT INTO recipes(chocolate_id, ingredient_id, amount) VALUES (?, ?, ?)";
+            sql = "INSERT INTO recipes(chocolate_id, ingredient_name, amount) VALUES (?, ?, ?)";
             ps = conn.prepareStatement(sql);
             for (String[] data : recipes_data) {
                 ps.setInt(1, Integer.parseInt(data[0]));
-                ps.setInt(2, Integer.parseInt(data[1]));
+                ps.setString(2, data[1]);
                 ps.setInt(3, Integer.parseInt(data[2]));
                 ps.addBatch();
                 ps.clearParameters();
@@ -264,32 +310,33 @@ public class InitServiceImpl extends Service implements InitService {
 
             List<String[]> requests_data = new ArrayList<String[]>() {
                 {
-                    add(new String[] { "1", "3", "Waiting" });
-                    add(new String[] { "2", "5", "Delivered" });
-                    add(new String[] { "3", "1", "Rejected" });
-                    add(new String[] { "4", "2", "Waiting" });
-                    add(new String[] { "5", "6", "Delivered" });
-                    add(new String[] { "6", "2", "Rejected" });
-                    add(new String[] { "7", "1", "Waiting" });
-                    add(new String[] { "8", "2", "Delivered" });
-                    add(new String[] { "9", "8", "Rejected" });
-                    add(new String[] { "10", "12", "Delivered" });
-                    add(new String[] { "11", "1", "Waiting" });
-                    add(new String[] { "12", "25", "Rejected" });
-                    add(new String[] { "3", "3", "Waiting" });
-                    add(new String[] { "6", "8", "Waiting" });
-                    add(new String[] { "1", "13", "Waiting" });
-                    add(new String[] { "8", "16", "Waiting" });
-                    add(new String[] { "3", "7", "Waiting" });
+                    add(new String[] { "1", "3", "Waiting", "2020-11-26" });
+                    add(new String[] { "2", "5", "Delivered", "2020-11-25" });
+                    add(new String[] { "3", "1", "Rejected", "2020-11-26" });
+                    add(new String[] { "4", "2", "Waiting", "2020-11-24" });
+                    add(new String[] { "5", "6", "Delivered", "2020-11-26" });
+                    add(new String[] { "6", "2", "Rejected", "2020-11-25" });
+                    add(new String[] { "7", "1", "Waiting", "2020-11-26" });
+                    add(new String[] { "8", "2", "Delivered", "2020-11-26" });
+                    add(new String[] { "9", "8", "Rejected", "2020-11-25" });
+                    add(new String[] { "10", "12", "Delivered", "2020-11-26" });
+                    add(new String[] { "11", "1", "Waiting", "2020-11-26" });
+                    add(new String[] { "12", "25", "Rejected", "2020-11-26" });
+                    add(new String[] { "3", "3", "Waiting", "2020-11-24" });
+                    add(new String[] { "6", "8", "Waiting", "2020-11-24" });
+                    add(new String[] { "1", "13", "Waiting", "2020-11-25" });
+                    add(new String[] { "8", "16", "Waiting", "2020-11-24" });
+                    add(new String[] { "3", "7", "Waiting", "2020-11-26" });
                 }
             };
 
-            sql = "INSERT INTO requests(chocolate_id, amount, status) VALUES (?, ?, ?)";
+            sql = "INSERT INTO requests(chocolate_id, amount, status, date_requested) VALUES (?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
             for (String[] data : requests_data) {
                 ps.setInt(1, Integer.parseInt(data[0]));
                 ps.setInt(2, Integer.parseInt(data[1]));
                 ps.setString(3, data[2]);
+                ps.setDate(4, Date.valueOf(data[3]));
                 ps.addBatch();
                 ps.clearParameters();
             }
