@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 import javax.annotation.Resource;
 import javax.xml.ws.WebServiceContext;
@@ -14,10 +16,10 @@ import javax.xml.ws.soap.SOAPFaultException;
 import com.factory.model.Balance;
 
 @WebService(endpointInterface = "com.factory.service.BalanceService")
+@HandlerChain(file="handlers.xml")
 public class BalanceServiceImpl extends Service implements BalanceService {
     @Override
     public Balance getBalance(){
-        AllowCORS();
         try{
             initConnection();
 
@@ -46,7 +48,6 @@ public class BalanceServiceImpl extends Service implements BalanceService {
 
     @Override
     public Balance doTransaction(Integer amount) {
-        AllowCORS();
         if (amount == null) {
             throw generateSoapFaultException(400, 
                     "Client Request Error: parameter 'amount' is not specified", "Client");

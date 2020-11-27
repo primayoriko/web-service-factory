@@ -13,7 +13,6 @@ import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.soap.SOAPFaultException;
 import javax.jws.WebMethod;
 
-import com.factory.model.Stock;
 import com.factory.model.Balance;
 import com.factory.model.Request;
 import com.factory.model.Status;
@@ -22,8 +21,8 @@ import javax.xml.ws.handler.MessageContext;
 
 @WebService(endpointInterface = "com.factory.service.RequestService")
 public class RequestServiceImpl extends Service implements RequestService {
+    @Override
     public Request[] getRequests() {
-        AllowCORS();
         try{
             initConnection();
 //            ps = conn.prepareStatement("SELECT * FROM requests ORDER BY status");
@@ -54,7 +53,6 @@ public class RequestServiceImpl extends Service implements RequestService {
 
     @Override
     public String changeRequestStatus(Integer id, String status){
-        AllowCORS();
         if (id == null || status == null) {
             throw generateSoapFaultException(400, "Client Request Error: parameter 'id' is not specified",
                     "Client");

@@ -24,14 +24,14 @@ public class Request {
     public Request(ResultSet rs){
         try{
             this.id = rs.getInt("id");
-            this.chocolateName = rs.getInt("name");
+            // this.chocolateName = rs.getInt("name");
             this.amount = rs.getInt("amount");
             this.status = Request.translateToStatus(rs.getString("status"));
             this.date_requested = rs.getDate("date_requested");
         } catch (Exception err){
             err.printStackTrace();
             this.id = null;
-            this.chocolateName = null;
+            // this.chocolateName = null;
             this.amount = null;
             this.status = null;
             this.date_requested = null;
@@ -67,13 +67,13 @@ public class Request {
         this.id = id;
     }
 
-    public Integer getChocolateName() {
-        return chocolateName;
-    }
+    // public Integer getChocolateName() {
+    //     return chocolateName;
+    // }
 
-    public void setChocolateName(Integer chocolateName) {
-        this.chocolateName = chocolateName;
-    }
+    // public void setChocolateName(Integer chocolateName) {
+    //     this.chocolateName = chocolateName;
+    // }
 
     public Integer getAmount() {
         return amount;

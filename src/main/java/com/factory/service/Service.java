@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Resource;
-import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.soap.SOAPFaultException;
 
@@ -55,14 +53,6 @@ public class Service {
         } catch (SQLException err) {
             err.printStackTrace();
         }
-    }
-    
-    protected void AllowCORS() {
-        webServiceContext.getMessageContext().put(MessageContext.HTTP_RESPONSE_HEADERS, new HashMap<String, List<String>>() {{
-            put("Access-Control-Allow-Origin", new ArrayList<String>() {{
-                add("*");
-            }});
-        }});
     }
     
     protected SOAPFaultException generateSoapFaultException(Integer response_code, String message, String fault_code) {

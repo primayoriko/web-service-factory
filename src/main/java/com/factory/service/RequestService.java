@@ -7,7 +7,6 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
-import com.factory.model.Stock;
 import com.factory.model.Request;
 
 @WebService
@@ -17,7 +16,7 @@ public interface RequestService {
     public Request[] getRequests();
     
     @WebMethod
-    public String changeRequestStatus(Integer Id, String status);
+    public String changeRequestStatus(@WebParam(name="id") Integer Id, @WebParam(name="status") String status);
 
     @WebMethod
     public String addRequest(Integer chocolate_id, Integer amount);

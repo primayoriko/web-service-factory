@@ -49,34 +49,34 @@ public class InitServiceImpl extends Service implements InitService {
             else
                 output.add("ERROR create table chocolates");
 
-            sql = "CREATE TABLE ingredients ("
-                    + "id SERIAL PRIMARY KEY, "
-                    // + "name VARCHAR(50) NOT NULL, "
-                    + "amount INT NOT NULL, "
-                    + "expire_date DATE NOT NULL "
-                    // + "PRIMARY KEY (id, name) "
-                + ")";
-            rs = statement.executeUpdate(sql);
+            // sql = "CREATE TABLE ingredients ("
+            //         + "id SERIAL PRIMARY KEY, "
+            //         // + "name VARCHAR(50) NOT NULL, "
+            //         + "amount INT NOT NULL, "
+            //         + "expire_date DATE NOT NULL "
+            //         // + "PRIMARY KEY (id, name) "
+            //     + ")";
+            // rs = statement.executeUpdate(sql);
 
-            if(rs == 0)
-                output.add("ingredients table successfully created");
-            else
-                output.add("ERROR create table ingredients");
+            // if(rs == 0)
+            //     output.add("ingredients table successfully created");
+            // else
+            //     output.add("ERROR create table ingredients");
 
-            sql = "CREATE TABLE recipes ("
-                    + "chocolate_id INT NOT NULL, "
-                    + "ingredient_name INT NOT NULL, "
-                    + "amount INT NOT NULL, "
-                    + "PRIMARY KEY (chocolate_id, ingredient_name), "
-                    + "FOREIGN KEY (chocolate_id) REFERENCES chocolates(id), "
-                    + "FOREIGN KEY (ingredient_name) REFERENCES ingredients(name)"
-                + ")";
-            rs = statement.executeUpdate(sql);
+            // sql = "CREATE TABLE recipes ("
+            //         + "chocolate_id INT NOT NULL, "
+            //         + "ingredient_name INT NOT NULL, "
+            //         + "amount INT NOT NULL, "
+            //         + "PRIMARY KEY (chocolate_id, ingredient_name), "
+            //         + "FOREIGN KEY (chocolate_id) REFERENCES chocolates(id), "
+            //         + "FOREIGN KEY (ingredient_name) REFERENCES ingredients(name)"
+            //     + ")";
+            // rs = statement.executeUpdate(sql);
 
-            if(rs == 0)
-                output.add("recipes table successfully created");
-            else
-                output.add("ERROR create table recipes");
+            // if(rs == 0)
+            //     output.add("recipes table successfully created");
+            // else
+            //     output.add("ERROR create table recipes");
 
             sql = "CREATE TABLE requests ("
                     + "id SERIAL PRIMARY KEY, "
@@ -178,32 +178,32 @@ public class InitServiceImpl extends Service implements InitService {
                 output.add("Error inserting chocolates data");
             }
 
-            List<String[]> ingredients_data = new ArrayList<String[]>() {
-                {
-                    add(new String[] { "coklat", "25", "2020-12-09" });
-                    add(new String[] { "susu", "32", "2020-12-15" });
-                    add(new String[] { "matcha", "12", "2021-2-14" });
-                    add(new String[] { "gula", "60", "2021-4-22" });
-                    add(new String[] { "kacang", "18", "2021-5-10" });
-                    add(new String[] { "berry", "9", "2020-12-25" });
-                }
-            };
+            // List<String[]> ingredients_data = new ArrayList<String[]>() {
+            //     {
+            //         add(new String[] { "coklat", "25", "2020-12-09" });
+            //         add(new String[] { "susu", "32", "2020-12-15" });
+            //         add(new String[] { "matcha", "12", "2021-2-14" });
+            //         add(new String[] { "gula", "60", "2021-4-22" });
+            //         add(new String[] { "kacang", "18", "2021-5-10" });
+            //         add(new String[] { "berry", "9", "2020-12-25" });
+            //     }
+            // };
 
-            sql = "INSERT INTO ingredients(name, amount, expire_date) VALUES (?, ?, ?)";
-            ps = conn.prepareStatement(sql);
-            for (String[] data : ingredients_data) {
-                ps.setString(1, data[0]);
-                ps.setInt(2, Integer.parseInt(data[1]));
-                ps.setDate(3, Date.valueOf(data[2]));
-                ps.addBatch();
-                ps.clearParameters();
-            }
-            res = ps.executeBatch();
-            if (res.length == ingredients_data.size()){
-                output.add("Ingredients data inserted successfully!");
-            } else {
-                output.add("Error inserting ingredients data");
-            }
+            // sql = "INSERT INTO ingredients(name, amount, expire_date) VALUES (?, ?, ?)";
+            // ps = conn.prepareStatement(sql);
+            // for (String[] data : ingredients_data) {
+            //     ps.setString(1, data[0]);
+            //     ps.setInt(2, Integer.parseInt(data[1]));
+            //     ps.setDate(3, Date.valueOf(data[2]));
+            //     ps.addBatch();
+            //     ps.clearParameters();
+            // }
+            // res = ps.executeBatch();
+            // if (res.length == ingredients_data.size()){
+            //     output.add("Ingredients data inserted successfully!");
+            // } else {
+            //     output.add("Error inserting ingredients data");
+            // }
 
             // List<String[]> recipes_data = new ArrayList<String[]>() {
             //     {
@@ -248,65 +248,65 @@ public class InitServiceImpl extends Service implements InitService {
             //         add(new String[] { "12", "2", "2"});
             //     }
             // };
-            List<String[]> recipes_data = new ArrayList<String[]>() {
-                {
-                    add(new String[] { "1", "coklat", "2"});
-                    add(new String[] { "1", "gula", "2"});
-                    add(new String[] { "1", "susu", "2"});
-                    add(new String[] { "1", "berry", "2"});
-                    add(new String[] { "2", "coklat", "2"});
-                    add(new String[] { "2", "gula", "2"});
-                    add(new String[] { "2", "susu", "1"});
-                    add(new String[] { "2", "kacang", "3"});
-                    add(new String[] { "3", "coklat", "1"});
-                    add(new String[] { "3", "gula", "4"});
-                    add(new String[] { "3", "susu", "5"});
-                    add(new String[] { "3", "matcha", "3"});
-                    add(new String[] { "4", "coklat", "3"});
-                    add(new String[] { "4", "gula", "2"});
-                    add(new String[] { "4", "susu", "2"});
-                    add(new String[] { "5", "coklat", "2"});
-                    add(new String[] { "5", "gula", "3"});
-                    add(new String[] { "5", "susu", "3"});
-                    add(new String[] { "6", "coklat", "5"});
-                    add(new String[] { "6", "gula", "1"});
-                    add(new String[] { "7", "coklat", "3"});
-                    add(new String[] { "7", "gula", "3"});
-                    add(new String[] { "7", "susu", "4"});
-                    add(new String[] { "8", "coklat", "4"});
-                    add(new String[] { "8", "gula", "1"});
-                    add(new String[] { "8", "susu", "1"});
-                    add(new String[] { "9", "coklat", "1"});
-                    add(new String[] { "9", "gula", "1"});
-                    add(new String[] { "9", "susu", "2"});
-                    add(new String[] { "10", "coklat", "1"});
-                    add(new String[] { "10", "gula", "3"});
-                    add(new String[] { "10", "susu", "2"});
-                    add(new String[] { "11", "coklat", "2"});
-                    add(new String[] { "11", "gula", "3"});
-                    add(new String[] { "11", "susu", "3"});
-                    add(new String[] { "11", "kacang", "2"});
-                    add(new String[] { "12", "coklat", "1"});
-                    add(new String[] { "12", "gula", "5"});
-                    add(new String[] { "12", "susu", "2"});
-                }
-            };
+            // List<String[]> recipes_data = new ArrayList<String[]>() {
+            //     {
+            //         add(new String[] { "1", "coklat", "2"});
+            //         add(new String[] { "1", "gula", "2"});
+            //         add(new String[] { "1", "susu", "2"});
+            //         add(new String[] { "1", "berry", "2"});
+            //         add(new String[] { "2", "coklat", "2"});
+            //         add(new String[] { "2", "gula", "2"});
+            //         add(new String[] { "2", "susu", "1"});
+            //         add(new String[] { "2", "kacang", "3"});
+            //         add(new String[] { "3", "coklat", "1"});
+            //         add(new String[] { "3", "gula", "4"});
+            //         add(new String[] { "3", "susu", "5"});
+            //         add(new String[] { "3", "matcha", "3"});
+            //         add(new String[] { "4", "coklat", "3"});
+            //         add(new String[] { "4", "gula", "2"});
+            //         add(new String[] { "4", "susu", "2"});
+            //         add(new String[] { "5", "coklat", "2"});
+            //         add(new String[] { "5", "gula", "3"});
+            //         add(new String[] { "5", "susu", "3"});
+            //         add(new String[] { "6", "coklat", "5"});
+            //         add(new String[] { "6", "gula", "1"});
+            //         add(new String[] { "7", "coklat", "3"});
+            //         add(new String[] { "7", "gula", "3"});
+            //         add(new String[] { "7", "susu", "4"});
+            //         add(new String[] { "8", "coklat", "4"});
+            //         add(new String[] { "8", "gula", "1"});
+            //         add(new String[] { "8", "susu", "1"});
+            //         add(new String[] { "9", "coklat", "1"});
+            //         add(new String[] { "9", "gula", "1"});
+            //         add(new String[] { "9", "susu", "2"});
+            //         add(new String[] { "10", "coklat", "1"});
+            //         add(new String[] { "10", "gula", "3"});
+            //         add(new String[] { "10", "susu", "2"});
+            //         add(new String[] { "11", "coklat", "2"});
+            //         add(new String[] { "11", "gula", "3"});
+            //         add(new String[] { "11", "susu", "3"});
+            //         add(new String[] { "11", "kacang", "2"});
+            //         add(new String[] { "12", "coklat", "1"});
+            //         add(new String[] { "12", "gula", "5"});
+            //         add(new String[] { "12", "susu", "2"});
+            //     }
+            // };
 
-            sql = "INSERT INTO recipes(chocolate_id, ingredient_name, amount) VALUES (?, ?, ?)";
-            ps = conn.prepareStatement(sql);
-            for (String[] data : recipes_data) {
-                ps.setInt(1, Integer.parseInt(data[0]));
-                ps.setString(2, data[1]);
-                ps.setInt(3, Integer.parseInt(data[2]));
-                ps.addBatch();
-                ps.clearParameters();
-            }
-            res = ps.executeBatch();
-            if (res.length == recipes_data.size()){
-                output.add("Recipes data inserted successfully!");
-            } else {
-                output.add("Error inserting recipes data");
-            }
+            // sql = "INSERT INTO recipes(chocolate_id, ingredient_name, amount) VALUES (?, ?, ?)";
+            // ps = conn.prepareStatement(sql);
+            // for (String[] data : recipes_data) {
+            //     ps.setInt(1, Integer.parseInt(data[0]));
+            //     ps.setString(2, data[1]);
+            //     ps.setInt(3, Integer.parseInt(data[2]));
+            //     ps.addBatch();
+            //     ps.clearParameters();
+            // }
+            // res = ps.executeBatch();
+            // if (res.length == recipes_data.size()){
+            //     output.add("Recipes data inserted successfully!");
+            // } else {
+            //     output.add("Error inserting recipes data");
+            // }
 
             List<String[]> requests_data = new ArrayList<String[]>() {
                 {
