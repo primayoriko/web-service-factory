@@ -40,11 +40,11 @@ public class Balance {
         this.amount = amount;
     }
 
-    public boolean isValidTransaction(Integer amount){
-        return this.amount >= amount;
+    public boolean isValidChange(Integer amount){
+        return this.amount + amount >= 0;
     }
 
-    public void doTransaction(Integer amount){
-        this.amount -= amount;
+    public void changeAmount(Integer amount){
+        this.amount += amount;
     }
 }

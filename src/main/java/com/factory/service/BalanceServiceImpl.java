@@ -47,7 +47,7 @@ public class BalanceServiceImpl extends Service implements BalanceService {
     }
 
     @Override
-    public Balance doTransaction(Integer amount) {
+    public Balance changeAmount(Integer amount) {
         if (amount == null) {
             throw generateSoapFaultException(400, 
                     "Client Request Error: parameter 'amount' is not specified", "Client");
@@ -63,8 +63,8 @@ public class BalanceServiceImpl extends Service implements BalanceService {
             if (rs.isBeforeFirst()) { // Check not empty
                 rs.next();
                 Balance balance = new Balance(rs);
-                if (balance.isValidTransaction(amount)) {
-                    balance.doTransaction(amount);
+                if (balance.isValidChange(amount)) {
+                    balance.changeAmount(amount);
                 } else {
                     throw generateSoapFaultException(404, 
                             "Client Request Error: Amount is invalid!", "Client");

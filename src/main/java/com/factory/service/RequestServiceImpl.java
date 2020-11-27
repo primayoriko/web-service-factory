@@ -26,7 +26,7 @@ public class RequestServiceImpl extends Service implements RequestService {
         try{
             initConnection();
 //            ps = conn.prepareStatement("SELECT * FROM requests ORDER BY status");
-            ps = conn.prepareStatement("SELECT r.id, r.amount, r.status, c.name FROM " +
+            ps = conn.prepareStatement("SELECT r.id, r.amount, r.status, r.chocolate_id, c.name FROM " +
                     "requests as r LEFT JOIN chocolates as c ON r.chocolate_id = c.id  ORDER BY status");
 
             ArrayList<Request> requests = new ArrayList<Request>();
@@ -68,7 +68,11 @@ public class RequestServiceImpl extends Service implements RequestService {
 
             rs = ps.executeQuery();
 
-            // LOGIC HAVEN'T ADDED
+            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
+            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
+            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
+            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
+            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
 
             return String.format("Request status for %d has been modified to %s", id, status);
         } catch (Exception err){

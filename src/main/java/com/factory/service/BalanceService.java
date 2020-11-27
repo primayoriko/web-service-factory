@@ -15,5 +15,5 @@ public interface BalanceService {
     public Balance getBalance();
 
     @WebMethod
-    public Balance doTransaction(@WebParam(name="amount") Integer amount);
+    public Balance changeAmount(@WebParam(name="amount") Integer amount);
 }

@@ -55,7 +55,7 @@
 					"response": []
 				},
 				{
-					"name": "doTransaction",
+					"name": "changeAmount",
 					"request": {
 						"method": "POST",
 						"header": [],

@@ -15,26 +15,30 @@ public class Request {
     @XmlElement( required = true )
     private Integer chocolateId;
     @XmlElement( required = true )
+    private String chocolateName;
+    @XmlElement( required = true )
     private Integer amount;
     @XmlElement( required = true )
     private Status status;
     @XmlElement( required = true )
-    private Date date_requested;
+    private Date dateRequested;
 
     public Request(ResultSet rs){
         try{
             this.id = rs.getInt("id");
-            // this.chocolateName = rs.getInt("name");
+            this.chocolateName = rs.getString("name");
+            this.chocolateId = rs.getInt("chocolate_id");
             this.amount = rs.getInt("amount");
             this.status = Request.translateToStatus(rs.getString("status"));
-            this.date_requested = rs.getDate("date_requested");
+            this.dateRequested = rs.getDate("dateRequested");
         } catch (Exception err){
             err.printStackTrace();
             this.id = null;
-            // this.chocolateName = null;
+            this.chocolateName = null;
+            this.chocolateId = null;
             this.amount = null;
             this.status = null;
-            this.date_requested = null;
+            this.dateRequested = null;
         }
     }
 
@@ -67,13 +71,21 @@ public class Request {
         this.id = id;
     }
 
-    // public Integer getChocolateName() {
-    //     return chocolateName;
-    // }
+     public String getChocolateName() {
+         return chocolateName;
+     }
 
-    // public void setChocolateName(Integer chocolateName) {
-    //     this.chocolateName = chocolateName;
-    // }
+     public void setChocolateName(String chocolateName) {
+         this.chocolateName = chocolateName;
+     }
+
+    public Integer getChocolateId() {
+        return chocolateId;
+    }
+
+    public void setChocolateId(Integer chocolateId) {
+        this.chocolateId = chocolateId;
+    }
 
     public Integer getAmount() {
         return amount;
@@ -92,10 +104,10 @@ public class Request {
     }
 
     public Date getDateRequested() {
-        return date_requested;
+        return dateRequested;
     }
 
-    public void setDateRequested(Date date_requested) {
-        this.date_requested = date_requested;
+    public void setDateRequested(Date dateRequested) {
+        this.dateRequested = dateRequested;
     }
 }

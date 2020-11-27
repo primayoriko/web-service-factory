@@ -83,7 +83,7 @@ public class InitServiceImpl extends Service implements InitService {
                     + "chocolate_id INT NOT NULL, "
                     + "amount INT NOT NULL, "
                     + "status VARCHAR(10), "
-                    + "date_requested DATE NOT NULL, "
+                    + "dateRequested DATE NOT NULL, "
                     + "FOREIGN KEY (chocolate_id) REFERENCES chocolates(id)"
                 + ")";
             rs = statement.executeUpdate(sql);
@@ -330,7 +330,7 @@ public class InitServiceImpl extends Service implements InitService {
                 }
             };
 
-            sql = "INSERT INTO requests(chocolate_id, amount, status, date_requested) VALUES (?, ?, ?, ?)";
+            sql = "INSERT INTO requests(chocolate_id, amount, status, dateRequested) VALUES (?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
             for (String[] data : requests_data) {
                 ps.setInt(1, Integer.parseInt(data[0]));
