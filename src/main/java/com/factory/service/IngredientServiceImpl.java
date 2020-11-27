@@ -6,6 +6,5 @@ import javax.xml.ws.WebServiceContext;
 
 @WebService(endpointInterface = "com.factory.service.IngredientService")
 public class IngredientServiceImpl implements IngredientService {
-    @Resource
-    private WebServiceContext webServiceContext;
+
 }

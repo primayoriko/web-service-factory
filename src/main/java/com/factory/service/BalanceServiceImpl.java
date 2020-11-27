@@ -11,9 +11,6 @@ import com.factory.model.Balance;
 
 @WebService(endpointInterface = "com.factory.service.BalanceService")
 public class BalanceServiceImpl extends Service implements BalanceService {
-    @Resource
-    private WebServiceContext webServiceContext;
-
     @Override
     public Balance getBalance(){
         try{

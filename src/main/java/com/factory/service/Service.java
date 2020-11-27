@@ -1,5 +1,7 @@
 package com.factory.service;
 
+import javax.annotation.Resource;
+import javax.xml.ws.WebServiceContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +11,9 @@ import java.sql.SQLException;
 import java.sql.*;
 
 public class Service {
+    @Resource
+    protected WebServiceContext webServiceContext;
+
     protected Connection conn = null;
     protected PreparedStatement ps = null;
     protected ResultSet rs = null;
