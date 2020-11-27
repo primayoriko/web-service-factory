@@ -14,7 +14,7 @@ import com.factory.model.Request;
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface RequestService {
     @WebMethod
-    public Stock[] getRequests();
+    public Request[] getRequests();
     
     @WebMethod
     public String changeRequestStatus(Integer Id, String status);
