@@ -13,14 +13,8 @@ public interface RequestService {
     public Request[] getRequests();
 
     @WebMethod
-    public String[] changeRequestStatus(Integer Id, String status);
+    public String changeRequestStatus(Integer Id, String status);
 
-    // @WebMethod
-    // public String[] getStock(Integer id);
-
-    // @WebMethod
-    // public String[] requestStock();
-
-    // @WebMethod
-    // public String[] addStock();
+     @WebMethod
+     public String addRequest(Integer chocolate_id, Integer amount);
 }

@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface AuthService {
     @WebMethod
-    public Boolean register(String username, String email,
+    public String register(String username, String email,
                             String name, String password);
 
     @WebMethod

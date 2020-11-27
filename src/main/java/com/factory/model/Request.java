@@ -11,20 +11,20 @@ public class Request {
     }
 
     private Integer id;
-    private Integer chocolateId;
+    private Integer chocolateName;
     private Integer amount;
     private Status status;
 
     public Request(ResultSet rs){
         try{
             this.id = rs.getInt("id");
-            this.chocolateId = rs.getInt("chocolateId");
+            this.chocolateName = rs.getInt("name");
             this.amount = rs.getInt("amount");
             this.status = this.translateToStatus(rs.getString("status"));
         } catch (Exception err){
             err.printStackTrace();
             this.id = null;
-            this.chocolateId = null;
+            this.chocolateName = null;
             this.amount = null;
             this.status = null;
         }
@@ -59,12 +59,12 @@ public class Request {
         this.id = id;
     }
 
-    public Integer getChocolateId() {
-        return chocolateId;
+    public Integer getChocolateName() {
+        return chocolateName;
     }
 
-    public void setChocolateId(Integer chocolateId) {
-        this.chocolateId = chocolateId;
+    public void setChocolateName(Integer chocolateName) {
+        this.chocolateName = chocolateName;
     }
 
     public Integer getAmount() {

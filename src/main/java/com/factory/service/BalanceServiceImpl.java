@@ -2,8 +2,8 @@ package com.factory.service;
 
 import java.sql.Statement;
 
-import javax.annotation.Resource;
 import javax.jws.WebService;
+import javax.annotation.Resource;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
@@ -40,7 +40,7 @@ public class BalanceServiceImpl extends Service implements BalanceService {
     }
 
     @Override
-    public String[] doTransaction(Integer amount){
+    public String doTransaction(Integer amount){
         try{
             initConnection();
             
@@ -54,18 +54,24 @@ public class BalanceServiceImpl extends Service implements BalanceService {
                 if (balance.getAmount() >= amount) {
                     balance.setAmount(balance.getAmount() - amount);
                 } else {
-                    return new String[]{ "ERROR", "Amount is invalid!" };
+                    webServiceContext.getMessageContext()
+                            .put(MessageContext.HTTP_RESPONSE_CODE, 404);
+                    return "Amount is invalid!";
                 }
 
                 Statement statement = conn.createStatement();
                 statement.executeUpdate("UPDATE balance SET amount=" + balance.getAmount().toString() + " WHERE id=1");
-                return new String[] { "SUCCESS", balance.getAmount().toString() };
+                return balance.getAmount().toString();
             }
 
-            return new String[]{ "ERROR", "Record is empty" };
+            webServiceContext.getMessageContext()
+                    .put(MessageContext.HTTP_RESPONSE_CODE, 404);
+            return "Record is empty";
         } catch (Exception e){
             e.printStackTrace();
-            return new String[]{ "ERROR", e.toString() };
+            webServiceContext.getMessageContext()
+                    .put(MessageContext.HTTP_RESPONSE_CODE, 500);
+            return e.getMessage();
         } finally {
             closeConnection();
         }
