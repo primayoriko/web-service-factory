@@ -1,8 +1,10 @@
 package com.factory.service;
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.xml.bind.annotation.XmlElement;
 
 import com.factory.model.Balance;
 
@@ -13,5 +15,5 @@ public interface BalanceService {
     public Balance getBalance();
 
     @WebMethod
-    public String[] doTransaction(Integer amount);
+    public Balance doTransaction(@WebParam(name="amount") Integer amount);
 }

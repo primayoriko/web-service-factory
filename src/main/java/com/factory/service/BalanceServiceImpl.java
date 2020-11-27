@@ -1,11 +1,15 @@
 package com.factory.service;
 
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
+import javax.xml.ws.soap.SOAPFaultException;
 
 import com.factory.model.Balance;
 
@@ -16,6 +20,7 @@ public class BalanceServiceImpl extends Service implements BalanceService {
 
     @Override
     public Balance getBalance(){
+        AllowCORS(webServiceContext);
         try{
             initConnection();
 
@@ -29,21 +34,27 @@ public class BalanceServiceImpl extends Service implements BalanceService {
             }
 
             System.out.println("Record empty");
-            webServiceContext.getMessageContext()
-                    .put(MessageContext.HTTP_RESPONSE_CODE, 404);
-            return null;
+            throw generateSoapFaultException(ctx, 404, 
+                    "Internal Server Error. Please try again later.", "Server");
+        } catch (SOAPFaultException e){
+            throw e;
         } catch (Exception e){
             e.printStackTrace();
-            webServiceContext.getMessageContext()
-                    .put(MessageContext.HTTP_RESPONSE_CODE, 500);
-            return null;
+            throw generateSoapFaultException(ctx, 500, 
+                    "Internal Server Error. Please try again later.", "Server");
         } finally {
             closeConnection();
         }
     }
 
     @Override
-    public String[] doTransaction(Integer amount){
+    public Balance doTransaction(Integer amount) {
+        AllowCORS(webServiceContext);
+        if (amount == null) {
+            throw generateSoapFaultException(ctx, 400, 
+                    "Client Request Error: parameter 'amount' is not specified", "Client");
+        }
+        
         try{
             initConnection();
             
@@ -51,24 +62,29 @@ public class BalanceServiceImpl extends Service implements BalanceService {
             
             rs = ps.executeQuery();
             
-            if(rs.isBeforeFirst()){ // Check not empty
+            if (rs.isBeforeFirst()) { // Check not empty
                 rs.next();
                 Balance balance = new Balance(rs);
-                if (balance.getAmount() >= amount) {
-                    balance.setAmount(balance.getAmount() - amount);
+                if (balance.isValidTransaction(amount)) {
+                    balance.doTransaction(amount);
                 } else {
-                    return new String[]{ "ERROR", "Amount is invalid!" };
+                    throw generateSoapFaultException(ctx, 404, 
+                            "Client Request Error: Amount is invalid!", "Client");
                 }
 
                 Statement statement = conn.createStatement();
                 statement.executeUpdate("UPDATE balance SET amount=" + balance.getAmount().toString() + " WHERE id=1");
-                return new String[] { "SUCCESS", balance.getAmount().toString() };
+                return balance;
             }
-
-            return new String[]{ "ERROR", "Record is empty" };
+            
+            throw generateSoapFaultException(ctx, 404, 
+                    "Internal Server Error. Please try again later.", "Server");
+        } catch (SOAPFaultException e) {
+            throw e;
         } catch (Exception e){
             e.printStackTrace();
-            return new String[]{ "ERROR", e.toString() };
+            throw generateSoapFaultException(ctx, 500, 
+                    "Internal Server Error. Please try again later.", "Server");
         } finally {
             closeConnection();
         }
