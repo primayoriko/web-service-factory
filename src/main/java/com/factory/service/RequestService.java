@@ -14,7 +14,13 @@ import com.factory.model.Request;
 public interface RequestService {
     @WebMethod
     public Request[] getRequests();
-    
+
+    /*
+    Change status to delivered and substract the choco in ws factory
+     */
+    @WebMethod
+    public String deliverRequest(@WebParam(name="id") Integer Id);
+
     @WebMethod
     public String changeRequestStatus(@WebParam(name="id") Integer Id, @WebParam(name="status") String status);
 

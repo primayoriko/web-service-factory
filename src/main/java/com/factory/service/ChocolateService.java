@@ -18,4 +18,10 @@ public interface ChocolateService {
 
     @WebMethod
     public String changeAmount(@WebParam(name="id") Integer id, @WebParam(name="amount") Integer amount);
+
+    /*
+    Add chocolate with recipe
+     */
+    @WebMethod
+    public String addChocolate();
 }

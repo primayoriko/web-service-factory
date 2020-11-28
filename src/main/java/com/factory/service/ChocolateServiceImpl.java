@@ -117,4 +117,9 @@ public class ChocolateServiceImpl extends Service implements ChocolateService {
             closeConnection();
         }
     }
+
+    @Override
+    public String addChocolate(){
+        return null;
+    }
 }

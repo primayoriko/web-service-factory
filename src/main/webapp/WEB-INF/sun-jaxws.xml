@@ -18,9 +18,9 @@
             implementation='com.factory.service.ChocolateServiceImpl'
             url-pattern='/ws/Chocolate'/>
     <endpoint
-            name='Ingredient'
-            implementation='com.factory.service.IngredientServiceImpl'
-            url-pattern='/ws/Ingredient'/>
+            name='Stock'
+            implementation='com.factory.service.StockServiceImpl'
+            url-pattern='/ws/Stock'/>
     <endpoint
             name='Recipe'
             implementation='com.factory.service.RecipeServiceImpl'

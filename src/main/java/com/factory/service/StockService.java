@@ -6,5 +6,7 @@ import javax.jws.soap.SOAPBinding;
 
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
-public interface IngredientService {
+public interface StockService {
+    @WebMethod
+    public String addStock();
 }

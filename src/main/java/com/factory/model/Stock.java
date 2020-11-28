@@ -3,12 +3,12 @@ package com.factory.model;
 import java.sql.Date;
 import java.sql.ResultSet;
 
-public class Ingredient {
+public class Stock {
     private String name;
     private Integer count;
     private Date expireDate;
 
-    public Ingredient(ResultSet rs){
+    public Stock(ResultSet rs){
         try{
             this.name = rs.getString("name");
             this.count = rs.getInt("count");
@@ -21,7 +21,7 @@ public class Ingredient {
         }
     }
 
-    public Ingredient(String name, Integer count, Date expireDate){
+    public Stock(String name, Integer count, Date expireDate){
         this.name = name;
         this.count = count;
         this.expireDate = expireDate;

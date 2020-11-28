@@ -68,11 +68,11 @@ public class RequestServiceImpl extends Service implements RequestService {
 
             rs = ps.executeQuery();
 
-            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
-            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
-            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
-            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
-            // LOGIC HAVEN'T ADDED (add choco amount + subs ingredients)
+            // LOGIC HAVEN'T ADDED (add sub choco amount)
+            // LOGIC HAVEN'T ADDED (add sub choco amount)
+            // LOGIC HAVEN'T ADDED (add sub choco amount)
+            // LOGIC HAVEN'T ADDED (add sub choco amount)
+            // LOGIC HAVEN'T ADDED (add sub choco amount)
 
             return String.format("Request status for %d has been modified to %s", id, status);
         } catch (Exception err){
@@ -120,5 +120,10 @@ public class RequestServiceImpl extends Service implements RequestService {
         } finally {
             closeConnection();
         }
+    }
+
+    @Override
+    public String deliverRequest(Integer Id){
+        return null;
     }
 }
