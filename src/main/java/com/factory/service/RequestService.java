@@ -19,10 +19,10 @@ public interface RequestService {
     Change status to delivered and substract the choco in ws factory
      */
     @WebMethod
-    public String deliverRequest(@WebParam(name="id") Integer Id);
+    public String deliverRequest(@WebParam(name="id") Integer chocolateId);
 
     @WebMethod
-    public String changeRequestStatus(@WebParam(name="id") Integer Id, @WebParam(name="status") String status);
+    public String rejectRequest(@WebParam(name="id") Integer chocolateId);
 
     @WebMethod
     public String addRequest(Integer chocolate_id, Integer amount);
