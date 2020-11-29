@@ -15,5 +15,8 @@ public interface RecipeService {
 
     @WebMethod
     public Recipe[] getRecipes();
+
+    @WebMethod
+    public String addNewRecipe(@WebParam(name="name") String name, @WebParam(name="recipes") IgdrRecipe[] recipes);
 }
 

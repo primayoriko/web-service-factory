@@ -87,4 +87,21 @@ public class RecipeServiceImpl extends Service implements RecipeService {
             closeConnection();
         }
     }
+
+    @Override
+    public String addNewRecipe(String name, IgdrRecipe recipes) {
+        // if (name == null || recipes == null) {
+        //     throw generateSoapFaultException(400, 
+        //             "Client Request Error: parameter 'id' or 'quantity' is not specified", "Client");
+        // }
+        // try {
+        //     initConnection();
+        //     ps = conn.prepareStatement("SELECT amount FROM chocolates WHERE id = ?")
+        // //     ps.setInt(1, id)
+        //     rs = ps.executeQuery();
+             
+        //     // ps = conn.prepareStatement("UPDATE chocolates SET amount =" + id. WHERE")
+        // }
+        return null;
+    }
 }
