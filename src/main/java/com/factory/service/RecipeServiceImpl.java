@@ -49,4 +49,40 @@ public class RecipeServiceImpl extends Service implements RecipeService {
             closeConnection();
         }
     }
+
+    @Override
+    public Recipe[] getRecipes(){
+        try{
+            initConnection();
+
+            ps = conn.prepareStatement("SELECT * FROM recipes ORDER BY chocolate_id ASC");
+
+            rs = ps.executeQuery();
+
+            if(!rs.isBeforeFirst()){
+                throw generateSoapFaultException(404,
+                        "Recipe Not Found", "Server");
+            }
+
+            List<Recipe> recipes = new ArrayList<Recipe>();
+
+            while(rs.next()){
+                recipes.add(new Recipe(rs));
+            }
+
+            Recipe[] response = new Recipe[recipes.size()];
+
+            for(int i = 0; i < recipes.size(); i++){
+                response[i] = recipes.get(i);
+            }
+
+            return response;
+        } catch (Exception err) {
+            err.printStackTrace();
+            throw generateSoapFaultException(500,
+                    "Internal Server Error. Please try again later.", "Server");
+        } finally {
+            closeConnection();
+        }
+    }
 }

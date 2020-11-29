@@ -25,14 +25,14 @@ public class CORSFilter implements SOAPHandler<SOAPMessageContext> {
                 put("Access-Control-Allow-Origin", new ArrayList<String>() {{
                     add("*");
                 }});
-                // put("Access-Control-Allow-Methods", new ArrayList<String>() {{
-                //     add("GET");
-                //     add("POST");
-                //     add("DELETE");
-                //     add("PUT");
-                //     add("HEAD");
-                //     add("OPTIONS");
-                // }});
+                put("Access-Control-Allow-Methods", new ArrayList<String>() {{
+                    add("GET");
+                    add("POST");
+                    add("DELETE");
+                    add("PUT");
+                    add("HEAD");
+                    add("OPTIONS");
+                }});
             }});
         }
 
@@ -48,14 +48,14 @@ public class CORSFilter implements SOAPHandler<SOAPMessageContext> {
                 put("Access-Control-Allow-Origin", new ArrayList<String>() {{
                     add("*");
                 }});
-                // put("Access-Control-Allow-Methods", new ArrayList<String>() {{
-                //     add("GET");
-                //     add("POST");
-                //     add("DELETE");
-                //     add("PUT");
-                //     add("HEAD");
-                //     add("OPTIONS");
-                // }});
+                put("Access-Control-Allow-Methods", new ArrayList<String>() {{
+                    add("GET");
+                    add("POST");
+                    add("DELETE");
+                    add("PUT");
+                    add("HEAD");
+                    add("OPTIONS");
+                }});
             }});
         }
         return true;

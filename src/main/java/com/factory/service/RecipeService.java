@@ -12,5 +12,8 @@ import javax.jws.soap.SOAPBinding;
 public interface RecipeService {
     @WebMethod
     public Recipe[] getRecipe(@WebParam(name="id") Integer chocolateId);
+
+    @WebMethod
+    public Recipe[] getRecipes();
 }
 
