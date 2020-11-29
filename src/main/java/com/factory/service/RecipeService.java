@@ -7,6 +7,8 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
+import com.factory.model.IgdrRecipe;
+
 @WebService
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface RecipeService {
@@ -15,5 +17,8 @@ public interface RecipeService {
 
     @WebMethod
     public Recipe[] getRecipes();
+
+    @WebMethod
+    public String addNewRecipe(@WebParam(name="name") String name, @WebParam(name="recipes") IgdrRecipe[] recipes);
 }
 
