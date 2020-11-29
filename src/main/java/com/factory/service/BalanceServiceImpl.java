@@ -16,7 +16,7 @@ import javax.xml.ws.soap.SOAPFaultException;
 import com.factory.model.Balance;
 
 @WebService(endpointInterface = "com.factory.service.BalanceService")
-@HandlerChain(file="handlers.xml")
+@HandlerChain(file = "handlers.xml")
 public class BalanceServiceImpl extends Service implements BalanceService {
     @Override
     public Balance getBalance(){

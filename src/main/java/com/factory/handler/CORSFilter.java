@@ -18,8 +18,8 @@ public class CORSFilter implements SOAPHandler<SOAPMessageContext> {
 
     public boolean handleMessage(SOAPMessageContext messageContext) {
         Boolean outboundProperty = (Boolean)
-                messageContext.get (MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-
+            messageContext.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
+        
         if (outboundProperty.booleanValue()) {
             messageContext.put(SOAPMessageContext.HTTP_RESPONSE_HEADERS, new HashMap<String, List<String>>() {{
                 put("Access-Control-Allow-Origin", new ArrayList<String>() {{
@@ -42,7 +42,7 @@ public class CORSFilter implements SOAPHandler<SOAPMessageContext> {
     public boolean handleFault(SOAPMessageContext messageContext) {
         Boolean outboundProperty = (Boolean)
                 messageContext.get (MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-
+                
         if (outboundProperty.booleanValue()) {
             messageContext.put(SOAPMessageContext.HTTP_RESPONSE_HEADERS, new HashMap<String, List<String>>() {{
                 put("Access-Control-Allow-Origin", new ArrayList<String>() {{
