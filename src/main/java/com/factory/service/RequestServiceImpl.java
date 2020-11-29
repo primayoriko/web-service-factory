@@ -18,6 +18,7 @@ import com.factory.model.Balance;
 import com.factory.model.Request;
 import com.factory.model.Status;
 
+import java.sql.Statement;
 import javax.xml.ws.handler.MessageContext;
 
 @WebService(endpointInterface = "com.factory.service.RequestService")
@@ -28,7 +29,7 @@ public class RequestServiceImpl extends Service implements RequestService {
         try {
             initConnection();
 
-            ps = conn.prepareStatement("SELECT r.id, r.amount, r.status, r.chocolate_id, c.name FROM " +
+            ps = conn.prepareStatement("SELECT r.id, r.amount, r.status, r.chocolate_id, c.name, r.dateRequested FROM " +
                     "requests as r LEFT JOIN chocolates as c ON r.chocolate_id = c.id  ORDER BY status");
 
             ArrayList<Request> requests = new ArrayList<Request>();
@@ -72,13 +73,11 @@ public class RequestServiceImpl extends Service implements RequestService {
             rs.next();
             Chocolate chocolate = new Chocolate(rs);
 
-            ps = conn.prepareStatement("INSERT INTO requests (chocolate_id, amount, status) VALUES (?, ?, ?)");
-
-            ps.setInt(1, chocolateId);
-            ps.setInt(2, amount);
-            ps.setString(3, "Waiting");
-
-            rs = ps.executeQuery();
+            Statement statement = conn.createStatement();
+            statement.executeUpdate("INSERT INTO requests (chocolate_id, amount, status) VALUES ("
+                    + chocolate.getId().toString() + ", "
+                    + chocolate.getAmount().toString() + ", "
+                    + "Waiting)");
 
             return String.format("Created");
         } catch (Exception err){
@@ -91,16 +90,17 @@ public class RequestServiceImpl extends Service implements RequestService {
     }
 
     @Override
-    public String rejectRequest(Integer chocolateId) {
-        if (chocolateId == null) {
+    public String rejectRequest(Integer requestId) {
+        if (requestId == null) {
             throw generateSoapFaultException(400, "Client Request Error: parameter 'id' is not specified", "Client");
         }
         try {
             initConnection();
 
-            ps = conn.prepareStatement("SELECT * FROM requests WHERE id = ?");
+            ps = conn.prepareStatement("SELECT r.id, r.amount, r.status, r.chocolate_id, c.name, r.dateRequested FROM " +
+                    "requests as r LEFT JOIN chocolates as c ON r.chocolate_id = c.id WHERE r.id = ?");
 
-            ps.setInt(1, chocolateId);
+            ps.setInt(1, requestId);
 
             rs = ps.executeQuery();
 
@@ -116,14 +116,11 @@ public class RequestServiceImpl extends Service implements RequestService {
                         "Client Request Error: Bad Request, " + "the status must be still waiting", "Client");
             }
 
-            ps = conn.prepareStatement("UPDATE requests SET status = ? WHERE id = ?");
+            Statement statement = conn.createStatement();
+            statement.executeUpdate("UPDATE requests SET status = 'Rejected' WHERE id = "
+                    + requestId.toString());
 
-            ps.setString(1, "Rejected");
-            ps.setInt(2, chocolateId);
-
-            rs = ps.executeQuery();
-
-            return String.format("Request with ID %d has been rejected", chocolateId);
+            return String.format("Request with ID %d has been rejected", requestId);
         } catch (Exception err) {
             err.printStackTrace();
             webServiceContext.getMessageContext().put(MessageContext.HTTP_RESPONSE_CODE, 500);
@@ -133,20 +130,19 @@ public class RequestServiceImpl extends Service implements RequestService {
         }
     }
 
-    
-
     @Override
-    public String deliverRequest(Integer chocolateId){
-        if (chocolateId == null) {
+    public String deliverRequest(Integer requestId){
+        if (requestId == null) {
             throw generateSoapFaultException(400, "Client Request Error: parameter 'id' is not specified",
                     "Client");
         }
         try{
             initConnection();
 
-            ps = conn.prepareStatement("SELECT * FROM requests WHERE id = ?");
+            ps = conn.prepareStatement("SELECT r.id, r.amount, r.status, r.chocolate_id, c.name, r.dateRequested FROM " +
+                    "requests as r LEFT JOIN chocolates as c ON r.chocolate_id = c.id WHERE r.id = ?");
 
-            ps.setInt(1, chocolateId);
+            ps.setInt(1, requestId);
 
             rs = ps.executeQuery();
 
@@ -165,11 +161,12 @@ public class RequestServiceImpl extends Service implements RequestService {
 
             ps = conn.prepareStatement("SELECT * FROM chocolates WHERE id = ?");
 
-            ps.setInt(1, chocolateId);
+            ps.setInt(1, request.getChocolateId());
 
             rs = ps.executeQuery();
 
             rs.next();
+
             Chocolate chocolate = new Chocolate(rs);
 
             if(chocolate.getAmount() < request.getAmount()){
@@ -177,21 +174,16 @@ public class RequestServiceImpl extends Service implements RequestService {
                         "current chocolate not sufficient", "Client");
             }
 
-            ps = conn.prepareStatement("UPDATE requests SET status = ? WHERE id = ?");
+            Statement statement = conn.createStatement();
+            statement.executeUpdate("UPDATE requests SET status = 'Delivered' WHERE id = "
+                                    + requestId.toString());
 
-            ps.setString(1, "Delivered");
-            ps.setInt(2, chocolateId);
+            Integer newAmount = chocolate.getAmount() - request.getAmount();
+            statement = conn.createStatement();
+            statement.executeUpdate("UPDATE chocolates SET amount=" +
+                    newAmount.toString() + " WHERE id=" + chocolate.getId().toString());
 
-            rs = ps.executeQuery();
-
-            ps = conn.prepareStatement("UPDATE chocolates SET amount = ? WHERE id = ?");
-
-            ps.setInt(1, chocolate.getAmount() - request.getAmount());
-            ps.setInt(2, chocolateId);
-
-            rs = ps.executeQuery();
-
-            return String.format("Request with ID %d has been delivered", chocolateId);
+            return String.format("Request with ID %d has been delivered", requestId);
         } catch (Exception err){
             err.printStackTrace();
             webServiceContext.getMessageContext()
