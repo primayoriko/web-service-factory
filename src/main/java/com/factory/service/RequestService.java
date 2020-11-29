@@ -25,7 +25,7 @@ public interface RequestService {
     public String rejectRequest(@WebParam(name="id") Integer requestId);
 
     @WebMethod
-    public String addRequest(Integer chocolateId, Integer amount);
+    public String addRequest(@WebParam(name="id") Integer chocolateId, @WebParam(name="amount") Integer amount);
     
     // @WebMethod
     // public String[] changeRequestStatus(@WebParam(name="id") Integer Id, @WebParam(name="status") String status);
