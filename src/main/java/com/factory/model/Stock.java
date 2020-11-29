@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 public class Stock {
     private String name;
     private Integer amount;
-    private Date expireDate;
+    private String expireDate;
 
     public Stock(ResultSet rs){
         try{
             this.name = rs.getString("name");
             this.amount = rs.getInt("amount");
-            this.expireDate = rs.getDate("expire_date");
+            this.expireDate = rs.getString("expire_date");
         } catch (Exception err){
             err.printStackTrace();
             this.name = null;
@@ -21,7 +21,7 @@ public class Stock {
         }
     }
 
-    public Stock(String name, Integer amount, Date expireDate){
+    public Stock(String name, Integer amount, String expireDate){
         this.name = name;
         this.amount = amount;
         this.expireDate = expireDate;
@@ -35,11 +35,11 @@ public class Stock {
         this.amount = amount;
     }
 
-    public Date getExpireDate() {
+    public String getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(Date expireDate) {
+    public void setExpireDate(String expireDate) {
         this.expireDate = expireDate;
     }
 

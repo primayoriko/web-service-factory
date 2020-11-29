@@ -4,6 +4,7 @@ import com.factory.model.Balance;
 import com.factory.model.Chocolate;
 import com.factory.model.Request;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -74,10 +75,10 @@ public class RequestServiceImpl extends Service implements RequestService {
             Chocolate chocolate = new Chocolate(rs);
 
             Statement statement = conn.createStatement();
-            statement.executeUpdate("INSERT INTO requests (chocolate_id, amount, status) VALUES ("
+            statement.executeUpdate("INSERT INTO requests (chocolate_id, amount, status, daterequested) VALUES ("
                     + chocolate.getId().toString() + ", "
-                    + chocolate.getAmount().toString() + ", "
-                    + "Waiting)");
+                    + amount.toString() + ", "
+                    + "'Waiting', '" + (new Date()).toString() + "')");
 
             return String.format("Created");
         } catch (Exception err){
