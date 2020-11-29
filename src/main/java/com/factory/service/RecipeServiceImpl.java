@@ -11,6 +11,10 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 
+import com.factory.model.IgdrRecipe;
+import com.factory.service.Service;
+import com.factory.service.RecipeService;
+
 @WebService(endpointInterface = "com.factory.service.RecipeService")
 @HandlerChain(file = "handlers.xml")
 public class RecipeServiceImpl extends Service implements RecipeService {
@@ -89,7 +93,7 @@ public class RecipeServiceImpl extends Service implements RecipeService {
     }
 
     @Override
-    public String addNewRecipe(String name, IgdrRecipe recipes) {
+    public String addNewRecipe(String name, IgdrRecipe[] recipes) {
         // if (name == null || recipes == null) {
         //     throw generateSoapFaultException(400, 
         //             "Client Request Error: parameter 'id' or 'quantity' is not specified", "Client");

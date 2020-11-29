@@ -5,6 +5,10 @@ import javafx.util.Pair;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlElement;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class IgdrRecipe {
     @XmlElement(required = true)
@@ -12,31 +16,31 @@ public class IgdrRecipe {
     @XmlElement( required = true )
     private Integer amount;
     
-    public Ingredients(ResultSet rs){
+    public IgdrRecipe(ResultSet rs){
         try{
-            this.ingredientName = rs.getString("name");
-            this.ingredientAmount = rs.getInt("amount");
+            this.name = rs.getString("name");
+            this.amount = rs.getInt("amount");
         } catch (Exception err){
             err.printStackTrace();
-            this.ingredientName = null;
-            this.ingredientAmount = null;
+            this.name = null;
+            this.amount = null;
         }
     }
 
-    public String getIngredientName() {
-        return ingredientName;
+    public String getName() {
+        return name;
     }
 
-    public void setIngredientName(String ingredientName) {
-        this.ingredientName = ingredientName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getIngredientAmount() {
-        return ingredientAmount;
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setIngredientAmount(Integer ingredientAmount) {
-        this.ingredientAmount = ingredientAmount;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
 }
