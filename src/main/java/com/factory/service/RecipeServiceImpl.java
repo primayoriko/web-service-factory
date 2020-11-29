@@ -19,7 +19,10 @@ public class RecipeServiceImpl extends Service implements RecipeService {
         try{
             initConnection();
 
-            ps = conn.prepareStatement("SELECT * FROM recipes WHERE chocolate_id = ?");
+            ps = conn.prepareStatement("SELECT r.chocolate_id, c.name as chocolate_name, " +
+                    "r.item_id, i.name as item_name FROM chocolates as c " +
+                    "RIGHT JOIN recipes as r ON c.id = r.chocolate_id " +
+                    "LEFT JOIN items as i ON i.id = r.item_id WHERE chocolate_id = ?");
 
             ps.setInt(1, chocolateId);
 
@@ -57,7 +60,10 @@ public class RecipeServiceImpl extends Service implements RecipeService {
         try{
             initConnection();
 
-            ps = conn.prepareStatement("SELECT * FROM recipes ORDER BY chocolate_id ASC");
+            ps = conn.prepareStatement("SELECT r.chocolate_id, c.name as chocolate_name, r.item_id, " +
+                    "i.name as item_name FROM chocolates as c " +
+                    "RIGHT JOIN recipes as r ON c.id = r.chocolate_id " +
+                    "LEFT JOIN items as i ON i.id = r.item_id ORDER BY r.chocolate_id ASC");
 
             rs = ps.executeQuery();
 

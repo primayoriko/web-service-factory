@@ -7,22 +7,22 @@ import java.util.ArrayList;
 
 public class Recipe {
     private Integer chocolateId;
-    private Integer ingredientId;
+    private Integer itemId;
     private String chocolateName;
-    private String ingredientName;
+    private String itemName;
 
     public Recipe(ResultSet rs){
         try{
-            this.chocolateId = rs.getInt("chocolateId");
-            this.ingredientId = rs.getInt("ingredientId");
-            this.chocolateName = rs.getString("ingredient_name");
-            this.ingredientName = rs.getString("chocolate_name");
+            this.chocolateId = rs.getInt("chocolate_id");
+            this.itemId = rs.getInt("item_id");
+            this.chocolateName = rs.getString("item_name");
+            this.itemName = rs.getString("chocolate_name");
         } catch (Exception err){
             err.printStackTrace();
             this.chocolateId = null;
-            this.ingredientId = null;
+            this.itemId = null;
             this.chocolateName = null;
-            this.ingredientName = null;
+            this.itemName = null;
         }
     }
 
@@ -34,12 +34,12 @@ public class Recipe {
         this.chocolateId = chocolateId;
     }
 
-    public Integer getIngredientId() {
-        return ingredientId;
+    public Integer getItemId() {
+        return itemId;
     }
 
-    public void setIngredientId(Integer ingredientId) {
-        this.ingredientId = ingredientId;
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
     }
 
     public String getChocolateName() {
@@ -50,11 +50,11 @@ public class Recipe {
         this.chocolateName = chocolateName;
     }
 
-    public String getIngredientName() {
-        return ingredientName;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setIngredientName(String ingredientName) {
-        this.ingredientName = ingredientName;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 }
