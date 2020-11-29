@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 
 @WebService(endpointInterface = "com.factory.service.RecipeService")
+@HandlerChain(file = "handlers.xml")
 public class RecipeServiceImpl extends Service implements RecipeService {
     @Override
     public Recipe[] getRecipe(Integer chocolateId){

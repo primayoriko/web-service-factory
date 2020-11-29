@@ -16,8 +16,11 @@ public interface AuthService {
             @WebParam(name="name") String name, @WebParam(name="password") String password);
 
     @WebMethod
-    public String[] login(@WebParam(name = "email") String email, @WebParam(name = "password") String password);
+    public String login(@WebParam(name = "username") String username, @WebParam(name = "password") String password);
     
     @WebMethod
     public Boolean isAlreadyExists(@WebParam(name="username") String username, @WebParam(name="email") String email);
+    
+    @WebMethod
+    public Boolean validateJwt(@WebParam(name = "jwt") String jwt);
 }

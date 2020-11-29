@@ -11,6 +11,7 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.soap.SOAPFaultException;
+import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 
 import com.factory.model.Balance;
@@ -20,6 +21,7 @@ import com.factory.model.Status;
 import javax.xml.ws.handler.MessageContext;
 
 @WebService(endpointInterface = "com.factory.service.RequestService")
+@HandlerChain(file = "handlers.xml")
 public class RequestServiceImpl extends Service implements RequestService {
     @Override
     public Request[] getRequests() {
@@ -89,12 +91,11 @@ public class RequestServiceImpl extends Service implements RequestService {
     }
 
     @Override
-    public String rejectRequest(Integer chocolateId){
+    public String rejectRequest(Integer chocolateId) {
         if (chocolateId == null) {
-            throw generateSoapFaultException(400, "Client Request Error: parameter 'id' is not specified",
-                    "Client");
+            throw generateSoapFaultException(400, "Client Request Error: parameter 'id' is not specified", "Client");
         }
-        try{
+        try {
             initConnection();
 
             ps = conn.prepareStatement("SELECT * FROM requests WHERE id = ?");
@@ -103,17 +104,16 @@ public class RequestServiceImpl extends Service implements RequestService {
 
             rs = ps.executeQuery();
 
-            if(!rs.isBeforeFirst()){
-                throw generateSoapFaultException(404, "Client Request Error: Request Not Found",
-                        "Client");
+            if (!rs.isBeforeFirst()) {
+                throw generateSoapFaultException(404, "Client Request Error: Request Not Found", "Client");
             }
 
             rs.next();
             Request request = new Request(rs);
 
-            if(!request.getStatus().equals(Status.WAITING)){
-                throw generateSoapFaultException(400, "Client Request Error: Bad Request, " +
-                        "the status must be still waiting", "Client");
+            if (!request.getStatus().equals(Status.WAITING)) {
+                throw generateSoapFaultException(400,
+                        "Client Request Error: Bad Request, " + "the status must be still waiting", "Client");
             }
 
             ps = conn.prepareStatement("UPDATE requests SET status = ? WHERE id = ?");
@@ -124,15 +124,16 @@ public class RequestServiceImpl extends Service implements RequestService {
             rs = ps.executeQuery();
 
             return String.format("Request with ID %d has been rejected", chocolateId);
-        } catch (Exception err){
+        } catch (Exception err) {
             err.printStackTrace();
-            webServiceContext.getMessageContext()
-                    .put(MessageContext.HTTP_RESPONSE_CODE, 500);
-            return null;
+            webServiceContext.getMessageContext().put(MessageContext.HTTP_RESPONSE_CODE, 500);
+            throw generateSoapFaultException(500, "Internal Server Error. Please try again later.", "Server");
         } finally {
             closeConnection();
         }
     }
+
+    
 
     @Override
     public String deliverRequest(Integer chocolateId){
@@ -195,7 +196,8 @@ public class RequestServiceImpl extends Service implements RequestService {
             err.printStackTrace();
             webServiceContext.getMessageContext()
                     .put(MessageContext.HTTP_RESPONSE_CODE, 500);
-            return null;
+            throw generateSoapFaultException(500, 
+                    "Internal Server Error. Please try again later.", "Server");
         } finally {
             closeConnection();
         }
