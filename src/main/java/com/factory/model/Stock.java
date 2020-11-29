@@ -27,14 +27,6 @@ public class Stock {
         this.expireDate = expireDate;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Integer getAmount() {
         return amount;
     }
@@ -49,5 +41,25 @@ public class Stock {
 
     public void setExpireDate(Date expireDate) {
         this.expireDate = expireDate;
+    }
+
+    public boolean isAmountValid(Integer amount) {
+        return this.amount + amount >= 0;
+    }
+
+    public void changeAmount(Integer amount) {
+        this.amount += amount;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isExistInStocks() {
+        return this.expireDate == null;
     }
 }

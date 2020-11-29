@@ -63,7 +63,7 @@ public class InitServiceImpl extends Service implements InitService {
                  output.add("ERROR create table items");
 
             sql = "CREATE TABLE stocks ("
-                    + "item_id INT, "
+                    + "item_id SERIAL, "
                     + "amount INT NOT NULL, "
                     + "expire_date DATE NOT NULL, "
                     + "PRIMARY KEY (item_id, expire_date), "
