@@ -5,25 +5,25 @@ import java.sql.ResultSet;
 
 public class Stock {
     private String name;
-    private Integer count;
+    private Integer amount;
     private Date expireDate;
 
     public Stock(ResultSet rs){
         try{
             this.name = rs.getString("name");
-            this.count = rs.getInt("count");
+            this.amount = rs.getInt("amount");
             this.expireDate = rs.getDate("expire_date");
         } catch (Exception err){
             err.printStackTrace();
             this.name = null;
-            this.count = null;
+            this.amount = null;
             this.expireDate = null;
         }
     }
 
-    public Stock(String name, Integer count, Date expireDate){
+    public Stock(String name, Integer amount, Date expireDate){
         this.name = name;
-        this.count = count;
+        this.amount = amount;
         this.expireDate = expireDate;
     }
 
@@ -35,12 +35,12 @@ public class Stock {
         this.name = name;
     }
 
-    public Integer getCount() {
-        return count;
+    public Integer getAmount() {
+        return amount;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public Date getExpireDate() {
