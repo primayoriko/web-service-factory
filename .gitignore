@@ -1,4 +1,5 @@
-target/
+.idea/
+.settings/
 out/
 lib/
 old/
